@@ -8,7 +8,7 @@ class BDCONFIG {
 
     public function __construct()
     {
-        $this->HOST = "localhost";
+        $this->HOST = "190.13.179.171:3306";
         $this->USER = "sm_control";
         $this->PASS ="p7APm4.RxciUeyS-" ;
         $this->DBNAME = "smartberry_control";
