@@ -363,13 +363,14 @@ include_once "../../assest/config/datosUrLP.php";
                                                                     </div>
                                                                 </form>
                                                             </td>
+                                                            <td>
                                                             <form method="post" id="form1">
                                                                 <input type="hidden" class="form-control" placeholder="ID" id="ID" name="ID" value="<?php echo $r['ID_ICARGA']; ?>" />
                                                                 <input type="hidden" class="form-control" placeholder="URL" id="URL" name="URL" value="registroICarga" />
                                                                 <input type="hidden" class="form-control" placeholder="URLO" id="URLO" name="URLO" value="listarICarga" />                                                            <td>
                                                                     <span>
-                                                                        <button type="submit" class="btn btn-block btn-success" id="DUPLICARURL" name="DUPLICARURL" data-toggle="tooltip" title="Duplicar Instructivo Carga" >
-                                                                            <i class="fa fa-copy "></i> Duplicar
+                                                                        <button type="submit" name="DUPLICARURL" class="btn btn-block btn-success" title="DUPLICAR">
+                                                                            <i class="fa fa-copy"></i> Duplicar
                                                                         </button>
                                                                         <button type="submit" class="btn btn-block btn-danger" id="ELIMINAR" name="ELIMINAR" data-toggle="tooltip" title="Eliminar Instructivo Carga" >
                                                                             <i class="fa fa-copy "></i> Eliminar
