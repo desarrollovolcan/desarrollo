@@ -996,7 +996,7 @@ class ICARGA_ADO
     {
 
         try {
-            $query = "		UPDATE fruta_icarga SET	 MODIFICACION = SYSDATE(),   ESTADO_REGISTRO = 0 WHERE ID_ICARGA= ?;";
+            $query = "		UPDATE fruta_icarga SET	 MODIFICACION = SYSDATE(), ESTADO = 0,  ESTADO_REGISTRO = 0 WHERE ID_ICARGA= ?;";
             $this->conexion->prepare($query)
                 ->execute(
                     array(
