@@ -363,6 +363,21 @@ include_once "../../assest/config/datosUrLP.php";
                                                                     </div>
                                                                 </form>
                                                             </td>
+                                                            <td>
+                                                            <form method="post" id="form1">
+                                                                <input type="hidden" class="form-control" placeholder="ID" id="ID" name="ID" value="<?php echo $r['ID_ICARGA']; ?>" />
+                                                                <input type="hidden" class="form-control" placeholder="URL" id="URL" name="URL" value="registroICarga" />
+                                                                <input type="hidden" class="form-control" placeholder="URLO" id="URLO" name="URLO" value="listarICarga" />                                                            <td>
+                                                                    <span>
+                                                                        <button type="submit" name="DUPLICARURL" class="btn btn-block btn-success" title="DUPLICAR">
+                                                                            <i class="fa fa-copy"></i> Duplicar
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-block btn-danger" id="ELIMINAR" name="ELIMINAR" data-toggle="tooltip" title="Eliminar Instructivo Carga" >
+                                                                            <i class="fa fa-copy "></i> Eliminar
+                                                                        </button>                                                                                                                             
+                                                                    </span>
+                                                               </form>
+                                                            </td>
                                                             <td> <?php echo $ESTADOICARGA; ?> </td>
                                                             <td> <?php echo $TEMBARQUE; ?> </td>
                                                             <td> <?php echo $r['FECHACORTEDOCUMENTAL']; ?> </td>
@@ -475,6 +490,30 @@ include_once "../../assest/config/datosUrLP.php";
                 })
             </script>';
         }   
+        if (isset($_REQUEST['ELIMINAR'])) {
+            $IDELIMINAR = $_REQUEST['ID'];
+            $ICARGA->__SET('ID_ICARGA', $IDELIMINAR);
+            //LLAMADA AL METODO DE EDITAR DEL CONTROLADOR
+            $ICARGA_ADO->deshabilitar($ICARGA);
+
+            $AUSUARIO_ADO->agregarAusuario2("NULL",1, 3,"".$_SESSION["NOMBRE_USUARIO"].", Deshabilitar Detalle Instructivo Carga","fruta_icarga",$_REQUEST['ID'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'],$_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );
+
+            //REDIRECCIONAR A PAGINA listarICarga.php
+            $id_dato =  $_REQUEST['IDP'];
+            $accion_dato =  $_REQUEST['OPP'];
+            // echo "<script type='text/javascript'> location.href ='" . $_REQUEST['URLO'] . ".php?op';</script>";   
+            echo '<script>
+                Swal.fire({
+                    icon:"error",
+                    title:"Registro Eliminado",
+                    text:"El Instructivo de carga se ha eliminado correctamente ",
+                    showConfirmButton:true,
+                    confirmButtonText:"Volver al agrupado"
+                }).then((result)=>{
+                    location.href ="' . $_REQUEST['URLO'] . '.php?op&id='.$id_dato.'&a='.$accion_dato.'&urlo='.$urlo_dato.'&idd='.$idd_dato.'&ad='.$acciond_dato.'";                        
+                })
+            </script>'; 
+        }
         ?>
 </body>
 </html>

@@ -461,7 +461,7 @@ class ICARGA_ADO
         }
     }
 
-
+    
     //ACTUALIZAR INFORMACION DE LA FILA
     public function actualizarIcarga(ICARGA $ICARGA)
     {
@@ -696,8 +696,7 @@ class ICARGA_ADO
             die($e->getMessage());
         }
     }
-    //FUNCIONES ESPECIALIZADAS 
-
+    //FUNCIONES ESPECIALIZADAS    
 
     //LISTAS
     public function listarIcargaCerradoEmpresaTemporadaCBX($EMPRESA, $TEMPORADA)
@@ -990,18 +989,14 @@ class ICARGA_ADO
 
 
     //CAMBIAR ESTADOS
-
+ 
     //CAMBIO DE ESTADO DE LA FILA
     //CAMBIO A DESACTIVADO
     public function deshabilitar(ICARGA $ICARGA)
     {
 
         try {
-            $query = "
-		UPDATE fruta_icarga SET			
-            MODIFICACION = SYSDATE(),     
-            ESTADO_REGISTRO = 0
-		WHERE ID_ICARGA= ?;";
+            $query = "		UPDATE fruta_icarga SET	 MODIFICACION = SYSDATE(), ESTADO = 0,  ESTADO_REGISTRO = 0 WHERE ID_ICARGA= ?;";
             $this->conexion->prepare($query)
                 ->execute(
                     array(

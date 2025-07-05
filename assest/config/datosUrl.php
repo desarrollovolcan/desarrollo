@@ -20,6 +20,7 @@ if (isset($_REQUEST['ELIMINARURL'])) {
     $accion_dato = "0"; 
     echo "<script type='text/javascript'> location.href ='". $_REQUEST['URL'].".php?op&id=".$id_dato."&a=".$accion_dato."';</script>";
 }
+
 if (isset($_REQUEST['HABILITARURL'])) {
     /*$_SESSION["parametro"] = $_REQUEST['ID'];   
     $_SESSION["parametro1"] = "1";*/

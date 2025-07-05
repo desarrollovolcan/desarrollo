@@ -511,8 +511,8 @@ if (isset($id_dato) && isset($accion_dato)) {
 
         endforeach;
     }
-    //editar =  OBTENCION DE DATOS PARA LA EDICION DE REGISTRO
-    if ($OP == "editar") {
+    //editar =  OBTENCION DE DATOS PARA LA EDICION Y DUPLICADO DE REGISTRO
+    if ($OP == "editar" || $OP == "duplicar") {
 
         //OBTENCION DE INFORMACIOND DE LA FILA DEL REGISTRO
         //ALMACENAR INFORMACION EN ARREGLO
@@ -526,6 +526,7 @@ if (isset($id_dato) && isset($accion_dato)) {
         $DISABLEDMENU = "disabled";
         $DISABLEDSTYLE3 = "style='background-color: #eeeeee;'";
         $ARRAYVERICARGA = $ICARGA_ADO->verIcarga($IDOP);
+
         //OBTENCIONS DE LOS DATODS DE LA COLUMNAS DE LA FILA OBTENIDA
         //PASAR DATOS OBTENIDOS A VARIABLES QUE SE VISUALIZAR EN EL FORMULARIO DE LA VISTA
         foreach ($ARRAYVERICARGA as $r) :
@@ -603,7 +604,13 @@ if (isset($id_dato) && isset($accion_dato)) {
             $ESTADO = $r['ESTADO'];
 
         endforeach;
+          // Solo en duplicar: limpiar ID y número
+        if ($OP == "duplicar") {
+            $IDOP = "";
+            $NUMEROVER = ""; // Solo si es necesario
+        }
     }
+   
     //ver =  OBTENCION DE DATOS PARA LA VISUALIZACION DEL REGISTRO
     if ($OP == "ver") {
         //DESABILITAR INPUT DEL FORMULARIO
@@ -5448,9 +5455,119 @@ if (isset($_POST)) {
                         
                     })
                 </script>';
-            }        
+            }    
+            //OPERACION DE DUPLICADO DE FILA
+            
+            if (isset($_REQUEST['DUPLICAR'])) {
+
+                $ARRAYNUMERO = $ICARGA_ADO->obtenerNumero($_REQUEST['EMPRESA'],  $_REQUEST['TEMPORADA']);
+                $NUMERO = $ARRAYNUMERO[0]['NUMERO'] + 1;
+
+                $PUBLICAINSTRUCTIVO = $_REQUEST['NETOINSTRUCTIVO'] + $_REQUEST['REBATEINSTRUCTIVO'];
+                $ICARGA->__SET('NUMERO_ICARGA', $NUMERO);
+                $ICARGA->__SET('FECHA_ICARGA', $_REQUEST['FECHAINSTRUCTIVO']);
+                $ICARGA->__SET('FECHA_CDOCUMENTAL_ICARGA', $_REQUEST['FECHACDOCUMENTALICARGA']);
+                $ICARGA->__SET('BOOKING_ICARGA', $_REQUEST['BOOKINGINSTRUCTIVO']);
+                $ICARGA->__SET('NREFERENCIA_ICARGA', $_REQUEST['NUMEROREFERENCIAINSTRUCTIVO']);
+                $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
+                $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
+                $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
+                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);                
+                $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
+                $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
+                $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
+                $ICARGA->__SET('T_ICARGA', $_REQUEST['TINSTRUCTIVO']);
+                $ICARGA->__SET('O2_ICARGA', $_REQUEST['O2INSTRUCTIVO']);
+                $ICARGA->__SET('C02_ICARGA', $_REQUEST['CO2INSTRUCTIVO']);
+                $ICARGA->__SET('ALAMPA_ICARGA', $_REQUEST['ALAMPAINSTRUCTIVO']);
+                $ICARGA->__SET('COSTO_FLETE_ICARGA', $_REQUEST['COSTOFLETE']);
+                $ICARGA->__SET('DUS_ICARGA', $_REQUEST  ['DUSINSTRUCTIVO']);
+                $ICARGA->__SET('BOLAWBCRT_ICARGA', $_REQUEST['BOLAWBCRTINSTRUCTIVO']);
+                $ICARGA->__SET('NETO_ICARGA', $_REQUEST['NETOINSTRUCTIVO']);
+                $ICARGA->__SET('REBATE_ICARGA', $_REQUEST['REBATEINSTRUCTIVO']);
+                $ICARGA->__SET('PUBLICA_ICARGA', $PUBLICAINSTRUCTIVO);
+                $ICARGA->__SET('ID_SEGURO', $_REQUEST['SEGURO']);
+                $ICARGA->__SET('OBSERVACION_ICARGA', $_REQUEST['OBSERVACIONINSTRUCTIVO']);
+                $ICARGA->__SET('OBSERVACIONI_ICARGA', $_REQUEST['OBSERVACIONIINSTRUCTIVO']);
+                $ICARGA->__SET('ID_TSERVICIO', $_REQUEST['TSERVICIO']);
+                $ICARGA->__SET('ID_EXPPORTADORA', $_REQUEST['EXPORTADORA']);
+                $ICARGA->__SET('ID_CONSIGNATARIO', $_REQUEST['CONSIGNATARIO']);
+                $ICARGA->__SET('ID_EMISIONBL', $_REQUEST['EMISIONBL']);
+                $ICARGA->__SET('ID_NOTIFICADOR', $_REQUEST['NOTIFICADOR']);
+                $ICARGA->__SET('ID_BROKER', $_REQUEST['BROKER']);
+                $ICARGA->__SET('ID_RFINAL', $_REQUEST['RFINAL']);
+                $ICARGA->__SET('ID_MERCADO', $_REQUEST['MERCADO']);
+                $ICARGA->__SET('ID_AADUANA', $_REQUEST['AADUANA']);
+                $ICARGA->__SET('ID_AGCARGA', $_REQUEST['AGCARGA']);
+                $ICARGA->__SET('ID_DFINAL', $_REQUEST['DFINAL']);
+                $ICARGA->__SET('ID_FPAGO', $_REQUEST['FPAGO']);
+                $ICARGA->__SET('ID_CVENTA', $_REQUEST['CVENTA']);
+                $ICARGA->__SET('ID_MVENTA', $_REQUEST['MVENTA']);
+                $ICARGA->__SET('ID_TFLETE', $_REQUEST['TFLETE']);
+                $ICARGA->__SET('COSTO_FLETE_ICARGA', $_REQUEST['COSTOFLETE']);
+                $ICARGA->__SET('ID_TCONTENEDOR', $_REQUEST['TCONTENEDOR']);
+                $ICARGA->__SET('ID_ATMOSFERA', $_REQUEST['ATMOSFERA']);
+                if (isset($_REQUEST['TEMBARQUE'])) {
+                    if ($_REQUEST['TEMBARQUE'] == "1") {
+                        $ICARGA->__SET('ID_TRANSPORTE', $_REQUEST['TRANSPORTE']);
+                        $ICARGA->__SET('CRT_ICARGA', $_REQUEST['CRT']);
+                        $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA']);
+                        $ICARGA->__SET('ID_LDESTINO', $_REQUEST['LDESTINO']);
+                    }
+                    if ($_REQUEST['TEMBARQUE'] == "2") {
+                        $ICARGA->__SET('ID_LAREA', $_REQUEST['LAEREA']);
+                        $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
+                        $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
+                        $ICARGA->__SET('ID_ACARGA', $_REQUEST['ACARGA']);
+                        $ICARGA->__SET('ID_ADESTINO', $_REQUEST['ADESTINO']);
+                    }
+                    if ($_REQUEST['TEMBARQUE'] == "3") {
+                        $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
+                        $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
+                        $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                        $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
+                        $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
+                        $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
+                    }
+                }
+                $ICARGA->__SET('ID_PAIS',  $_REQUEST['PAIS']);
+                $ICARGA->__SET('ID_EMPRESA',  $_REQUEST['EMPRESA']);
+                $ICARGA->__SET('ID_PLANTA',  $_REQUEST['PLANTA']);
+                $ICARGA->__SET('ID_TEMPORADA',  $_REQUEST['TEMPORADA']);
+                $ICARGA->__SET('ID_USUARIOI', $IDUSUARIOS);
+                $ICARGA->__SET('ID_USUARIOM', $IDUSUARIOS);
+                //LLAMADA AL METODO DE EDITAR DEL CONTROLADOR  
+                $ICARGA_ADO->agregarIcarga($ICARGA);
+                $ARRYAOBTENERID = $ICARGA_ADO->obtenerId(
+                    $_REQUEST['FECHAINSTRUCTIVO'],
+                    $_REQUEST['OBSERVACIONINSTRUCTIVO'],
+                    $_REQUEST['EMPRESA'],
+                    $_REQUEST['TEMPORADA']
+                );
+                $AUSUARIO_ADO->agregarAusuario2($NUMERO,1,1,"".$_SESSION["NOMBRE_USUARIO"].", Duplicar Instructivo Carga","fruta_icarga",$ARRYAOBTENERID[0]['ID_ICARGA'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'],$_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );
+                //REDIRECCIONAR A PAGINA registroICarga.php
+                $id_dato = $ARRYAOBTENERID[0]['ID_ICARGA'];
+                $accion_dato = "duplicar";
+                echo '<script>
+                    Swal.fire({
+                        icon:"success",
+                        title:"Registro Duplicado",
+                        text:"El registro de Instructivo se ha duplicado correctamente",
+                        showConfirmButton: true,
+                        confirmButtonText:"Cerrar",
+                        closeOnConfirm:false
+                    }).then((result)=>{
+                            location.href = "registroICarga.php?op&id='.$id_dato.'&a='.$accion_dato.'";
+                        
+                    })
+                </script>';
+
+            }
+            
+    
             //OPERACION EDICION DE FILA    
             if (isset($_REQUEST['GUARDAR'])) {
+
                 $PUBLICAINSTRUCTIVO = $_REQUEST['NETOINSTRUCTIVO'] + $_REQUEST['REBATEINSTRUCTIVO'];
                 $ICARGA->__SET('FECHA_ICARGA', $_REQUEST['FECHAINSTRUCTIVO']);
                 $ICARGA->__SET('FECHA_CDOCUMENTAL_ICARGA', $_REQUEST['FECHACDOCUMENTALICARGA']);
@@ -5533,7 +5650,7 @@ if (isset($_POST)) {
                 $ICARGA_ADO->PorCargar($ICARGA);
 
                 $AUSUARIO_ADO->agregarAusuario2($NUMEROVER,1,2,"".$_SESSION["NOMBRE_USUARIO"].", Modificación de Instructivo Carga","fruta_icarga",$_REQUEST['IDP'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'],$_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );
-
+               
                 if ($accion_dato == "crear") {
                     $id_dato = $_REQUEST['IDP'];
                     $accion_dato = "crear";
