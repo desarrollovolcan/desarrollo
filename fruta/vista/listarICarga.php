@@ -363,6 +363,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                                     </div>
                                                                 </form>
                                                             </td>
+                                                            <!-- Botones Eliminar y Duplicar instructvo carga -->
                                                             <td>
                                                             <form method="post" id="form1">
                                                                 <input type="hidden" class="form-control" placeholder="ID" id="ID" name="ID" value="<?php echo $r['ID_ICARGA']; ?>" />
