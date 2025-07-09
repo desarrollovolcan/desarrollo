@@ -151,7 +151,9 @@ $RFINAL = "";
 $FECHAETD = "";
 $FECHAETA = "";
 $FECHAETAREAL = "";
+$FECHAETDREAL = "";
 $NCONTENEDOR="";
+$NCOURIER = "";
 $AADUANA = "";
 $AGCARGA = "";
 $TEMBARQUE = "";
@@ -166,6 +168,7 @@ $ADESTINO = "";
 $NAVIERA = "";
 $NAVE = "";
 $FECHASTACKING = "";
+$FECHASTACKINGF = "";
 $NVIAJE = "";
 $PCARGA = "";
 $PDESTINO = "";
@@ -454,7 +457,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAETD = $r['FECHAETD_ICARGA'];
             $FECHAETA = $r['FECHAETA_ICARGA'];
             $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETDREAL = $r['FECHAETDREAL_ICARGA'];
             $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
             $AADUANA = $r['ID_AADUANA'];
             $AGCARGA = $r['ID_AGCARGA'];
             $DFINAL = $r['ID_DFINAL'];
@@ -479,6 +484,7 @@ if (isset($id_dato) && isset($accion_dato)) {
                     $NAVIERA = $r['ID_NAVIERA'];
                     $NAVE = $r['NAVE_ICARGA'];
                     $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
                     $NVIAJE = $r['NVIAJE_ICARGA'];
                     $PCARGA = $r['ID_PCARGA'];
                     $PDESTINO = $r['ID_PDESTINO'];
@@ -512,7 +518,7 @@ if (isset($id_dato) && isset($accion_dato)) {
         endforeach;
     }
     //editar =  OBTENCION DE DATOS PARA LA EDICION Y DUPLICADO DE REGISTRO
-    if ($OP == "editar" || $OP == "duplicar") {
+    if ($OP == "editar" ) {
 
         //OBTENCION DE INFORMACIOND DE LA FILA DEL REGISTRO
         //ALMACENAR INFORMACION EN ARREGLO
@@ -549,7 +555,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAETD = $r['FECHAETD_ICARGA'];
             $FECHAETA = $r['FECHAETA_ICARGA'];
             $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETDREAL = $r['FECHAETDREAL_ICARGA'];
             $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
             $AADUANA = $r['ID_AADUANA'];
             $AGCARGA = $r['ID_AGCARGA'];
             $DFINAL = $r['ID_DFINAL'];
@@ -574,6 +582,7 @@ if (isset($id_dato) && isset($accion_dato)) {
                     $NAVIERA = $r['ID_NAVIERA'];
                     $NAVE = $r['NAVE_ICARGA'];
                     $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
                     $NVIAJE = $r['NVIAJE_ICARGA'];
                     $PCARGA = $r['ID_PCARGA'];
                     $PDESTINO = $r['ID_PDESTINO'];
@@ -604,13 +613,100 @@ if (isset($id_dato) && isset($accion_dato)) {
             $ESTADO = $r['ESTADO'];
 
         endforeach;
-          // Solo en duplicar: limpiar ID y número
-        if ($OP == "duplicar") {
-            $IDOP = "";
-            $NUMEROVER = ""; // Solo si es necesario
-        }
     }
-   
+    if ($OP == "duplicar") {
+    $DISABLED = "";
+    $DISABLEDSTYLE = "";
+    $DISABLED2 = "";
+    $DISABLEDSTYLE2 = "";
+    $DISABLED3 = "disabled";
+    $DISABLEDMENU = "disabled";
+    $DISABLEDSTYLE3 = "style='background-color: #eeeeee;'";
+
+    // Obtiene los datos del registro original
+    $ARRAYVERICARGA = $ICARGA_ADO->verIcarga($IDOP);
+
+    foreach ($ARRAYVERICARGA as $r) :
+        $NUMEROVER = $r['NUMERO_ICARGA'];
+            $FECHAINSTRUCTIVO = $r['FECHA_ICARGA'];
+            $FECHACDOCUMENTALICARGA = $r['FECHA_CDOCUMENTAL_ICARGA'];
+            $TSERVICIO = $r['ID_TSERVICIO'];
+            $BOOKINGINSTRUCTIVO = $r['BOOKING_ICARGA'];
+            $NUMEROREFERENCIAINSTRUCTIVO = $r['NREFERENCIA_ICARGA'];
+            $FECHAINGRESO = $r['INGRESO'];
+            $FECHAMODIFCIACION = $r['MODIFICACION'];
+            $EXPORTADORA = $r['ID_EXPPORTADORA'];
+            $CONSIGNATARIO = $r['ID_CONSIGNATARIO'];
+            $EMISIONBL = $r['ID_EMISIONBL'];
+            $NOTIFICADOR = $r['ID_NOTIFICADOR'];
+            $BROKER = $r['ID_BROKER'];
+            $RFINAL = $r['ID_RFINAL'];
+            $MERCADO = $r['ID_MERCADO'];
+            $FECHAETD = $r['FECHAETD_ICARGA'];
+            $FECHAETA = $r['FECHAETA_ICARGA'];
+            $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETDREAL = $r['FECHAETDREAL_ICARGA'];
+            $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
+            $AADUANA = $r['ID_AADUANA'];
+            $AGCARGA = $r['ID_AGCARGA'];
+            $DFINAL = $r['ID_DFINAL'];
+            $FDA = $r['FDA_ICARGA'];
+            $TEMBARQUE = $r['TEMBARQUE_ICARGA'];
+            $COSTOFLETE = $r['COSTO_FLETE_ICARGA'];
+            if ($TEMBARQUE) {
+                if ($TEMBARQUE == "1") {
+                    $TRANSPORTE = $r['ID_TRANSPORTE'];
+                    $CRT = $r['CRT_ICARGA'];
+                    $LCARGA = $r['ID_LCARGA'];
+                    $LDESTINO = $r['ID_LDESTINO'];
+                }
+                if ($TEMBARQUE == "2") {
+                    $LAEREA = $r['ID_LAREA'];
+                    $NAVE = $r['NAVE_ICARGA'];
+                    $NVIAJE = $r['NVIAJE_ICARGA'];
+                    $ACARGA = $r['ID_ACARGA'];
+                    $ADESTINO = $r['ID_ADESTINO'];
+                }
+                if ($TEMBARQUE == "3") {
+                    $NAVIERA = $r['ID_NAVIERA'];
+                    $NAVE = $r['NAVE_ICARGA'];
+                    $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
+                    $NVIAJE = $r['NVIAJE_ICARGA'];
+                    $PCARGA = $r['ID_PCARGA'];
+                    $PDESTINO = $r['ID_PDESTINO'];
+                }
+            }
+            $FPAGO = $r['ID_FPAGO'];
+            $CVENTA = $r['ID_CVENTA'];
+            $MVENTA = $r['ID_MVENTA'];
+            $FUMIGADO = $r['FUMIGADO_ICARGA'];
+            $TFLETE = $r['ID_TFLETE'];
+            $TCONTENEDOR = $r['ID_TCONTENEDOR'];
+            $ATMOSFERA = $r['ID_ATMOSFERA'];
+            $TINSTRUCTIVO = $r['T_ICARGA'];
+            $O2INSTRUCTIVO = $r['O2_ICARGA'];
+            $CO2INSTRUCTIVO = $r['C02_ICARGA'];
+            $ALAMPAINSTRUCTIVO = $r['ALAMPA_ICARGA'];
+            $DUSINSTRUCTIVO = $r['DUS_ICARGA'];
+            $BOLAWBCRTINSTRUCTIVO = $r['BOLAWBCRT_ICARGA'];
+            $NETOINSTRUCTIVO = $r['NETO_ICARGA'];
+            $REBATEINSTRUCTIVO = $r['REBATE_ICARGA'];
+            $PUBLICAINSTRUCTIVO = $r['PUBLICA_ICARGA'];
+            $SEGURO = $r['ID_SEGURO'];
+            $OBSERVACIONINSTRUCTIVO = $r['OBSERVACION_ICARGA'];
+            $OBSERVACIONIINSTRUCTIVO = $r['OBSERVACIONI_ICARGA'];
+            $PAIS = $r['ID_PAIS'];
+            $EMPRESA = $r['ID_EMPRESA'];
+            $TEMPORADA = $r['ID_TEMPORADA'];
+            $ESTADO = $r['ESTADO'];
+        endforeach;
+
+        // Limpiar valores únicos
+        $IDOP = "";
+        $NUMEROVER = ""; // para evitar repetir el número
+    }
     //ver =  OBTENCION DE DATOS PARA LA VISUALIZACION DEL REGISTRO
     if ($OP == "ver") {
         //DESABILITAR INPUT DEL FORMULARIO
@@ -650,7 +746,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAETD = $r['FECHAETD_ICARGA'];
             $FECHAETA = $r['FECHAETA_ICARGA'];
             $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETDREAL = $r['FECHAETDREAL_ICARGA'];
             $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
             $AADUANA = $r['ID_AADUANA'];
             $AGCARGA = $r['ID_AGCARGA'];
             $DFINAL = $r['ID_DFINAL'];
@@ -675,6 +773,7 @@ if (isset($id_dato) && isset($accion_dato)) {
                     $NAVIERA = $r['ID_NAVIERA'];
                     $NAVE = $r['NAVE_ICARGA'];
                     $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
                     $NVIAJE = $r['NVIAJE_ICARGA'];
                     $PCARGA = $r['ID_PCARGA'];
                     $PDESTINO = $r['ID_PDESTINO'];
@@ -765,9 +864,15 @@ if (isset($_POST)) {
     if (isset($_REQUEST['FECHAETAREAL'])) {
         $FECHAETAREAL = $_REQUEST['FECHAETAREAL'];
     }
+    if (isset($_REQUEST['FECHAETDREAL'])) {
+        $FECHAETDREAL = $_REQUEST['FECHAETDREAL'];
+    }
     if (isset($_REQUEST['NCONTENEDOR'])) {
         $NCONTENEDOR = $_REQUEST['NCONTENEDOR'];
     }    
+    if (isset($_REQUEST['NCOURIER'])) {
+        $NCOURIER = $_REQUEST['NCOURIER'];
+    }
     if (isset($_REQUEST['AADUANA'])) {
         $AADUANA = $_REQUEST['AADUANA'];
     }
@@ -824,6 +929,9 @@ if (isset($_POST)) {
             }
             if (isset($_REQUEST['FECHASTACKING'])) {
                 $FECHASTACKING = $_REQUEST['FECHASTACKING'];
+            }
+            if (isset($_REQUEST['FECHASTACKINGF'])) {
+                $FECHASTACKINGF = $_REQUEST['FECHASTACKINGF'];
             }
             if (isset($_REQUEST['NVIAJE'])) {
                 $NVIAJE = $_REQUEST['NVIAJE'];
@@ -1494,10 +1602,12 @@ if (isset($_POST)) {
                     MERCADO = document.getElementById("MERCADO").selectedIndex;
                     PAIS = document.getElementById("PAIS").selectedIndex;
                     DFINAL = document.getElementById("DFINAL").selectedIndex;
+                    NCOURIER = document.getElementById("NCOURIER").value;
 
                     FECHAETD = document.getElementById("FECHAETD").value;
                     FECHAETA = document.getElementById("FECHAETA").value;
                     FECHAETAREAL = document.getElementById("FECHAETAREAL").value;
+                    FECHAETDREAL = document.getElementById("FECHAETDREAL").value;
                     AGCARGA = document.getElementById("AGCARGA").selectedIndex;
 
                     
@@ -1541,11 +1651,13 @@ if (isset($_POST)) {
                     document.getElementById('val_mercado').innerHTML = "";
                     document.getElementById('val_pais').innerHTML = "";
                     document.getElementById('val_dfinal').innerHTML = "";
+                    document.getElementById('val_ncourier').innerHTML = "";
                     
                     document.getElementById('val_agcarga').innerHTML = "";
                     document.getElementById('val_fechaetd').innerHTML = "";
                     document.getElementById('val_fechaeta').innerHTML = "";
                     document.getElementById('val_fechaetareal').innerHTML = "";
+                    document.getElementById('val_fechaetdreal').innerHTML = "";
                     
                     document.getElementById('val_atmosfera').innerHTML = "";
                     document.getElementById('val_t').innerHTML = "";
@@ -1721,6 +1833,22 @@ if (isset($_POST)) {
                     }
                     document.form_reg_dato.FECHAETAREAL.style.borderColor = "#4AF575";
 
+                    if (FECHAETDREAL == null || FECHAETDREAL.length == 0 || /^\s+$/.test(FECHAETDREAL)) {
+                        document.form_reg_dato.FECHAETDREAL.focus();
+                        document.form_reg_dato.FECHAETDREAL.style.borderColor = "#FF0000";
+                        document.getElementById('val_fechaetdreal').innerHTML = "NO A INGRESADO DATO";
+                        return false;
+                    }
+                    document.form_reg_dato.FECHAETDREAL.style.borderColor = "#4AF575";
+
+                    if (NCOURIER == null || NCOURIER.length == 0 || /^\s+$/.test(NCOURIER)) {
+                        document.form_reg_dato.NCOURIER.focus();
+                        document.form_reg_dato.NCOURIER.style.borderColor = "#FF0000";
+                        document.getElementById('val_ncourier').innerHTML = "NO A INGRESADO DATO";
+                        return false;
+                    }
+                    document.form_reg_dato.NCOURIER.style.borderColor = "#4AF575";
+
                     if (AGCARGA == null || AGCARGA == 0) {
                         document.form_reg_dato.AGCARGA.focus();
                         document.form_reg_dato.AGCARGA.style.borderColor = "#FF0000";
@@ -1832,12 +1960,14 @@ if (isset($_POST)) {
 
                         NAVIERA = document.getElementById("NAVIERA").selectedIndex;
                         FECHASTACKING = document.getElementById("FECHASTACKING").value;
+                        FECHASTACKINGF = document.getElementById("FECHASTACKINGF").value;
                         NVIAJE = document.getElementById("NVIAJE").value;
                         PCARGA = document.getElementById("PCARGA").selectedIndex;
                         PDESTINO = document.getElementById("PDESTINO").selectedIndex;
 
                         document.getElementById('val_naviera').innerHTML = "";
                         document.getElementById('val_fechastacking').innerHTML = "";
+                        document.getElementById('val_fechastackingf').innerHTML = "";
                         document.getElementById('val_nviaje').innerHTML = "";
                         document.getElementById('val_pcarga').innerHTML = "";
                         document.getElementById('val_pdestino').innerHTML = "";
@@ -1858,6 +1988,13 @@ if (isset($_POST)) {
                             return false;
                         }
                         document.form_reg_dato.FECHASTACKING.style.borderColor = "#4AF575";
+
+                        if (FECHASTACKINGF == null || FECHASTACKINGF.length == 0 || /^\s+$/.test(FECHASTACKINGF)) {
+                            document.form_reg_dato.FECHASTACKINGF.focus();
+                            document.form_reg_dato.FECHASTACKINGF.style.borderColor = "#FF0000";
+                            document.getElementById('val_fechastackingf').innerHTML = "NO A INGRESADO DATO";
+                            return false;
+                        }
 
                         if (NVIAJE == null || NVIAJE.length == 0 || /^\s+$/.test(NVIAJE)) {
                             document.form_reg_dato.NVIAJE.focus();
@@ -2201,9 +2338,9 @@ if (isset($_POST)) {
                                             
                                     </div>
                                     <div class="btn-group btn-block">
-                                        <button class="btn btn-success" id="btnHeaderSection1" type="button">Datos Generales</button>
-                                        <button class="btn btn-secondary" id="btnHeaderSection2" type="button">Datos Embarque</button>
-                                        <button class="btn btn-secondary" id="btnHeaderSection3" type="button">Datos Contenedor y Comercial</button>
+                                        <button class="btn btn-success" id="btnHeaderSection1" type="button">Paso 1</button>
+                                        <button class="btn btn-secondary" id="btnHeaderSection2" type="button">Paso 2</button>
+                                        <!-- <button class="btn btn-secondary" id="btnHeaderSection3" type="button">Datos Contenedor y Comercial</button> -->
                                     </div>
                                     <hr>
                                     <section id="section1">
@@ -2536,7 +2673,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Planta Carga</label>
                                                     <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
@@ -2554,7 +2691,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                  </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Ciudad Destino</label>
@@ -2996,7 +3133,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Planta Carga</label>
                                                     <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
@@ -3014,7 +3151,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             
                                             
                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
@@ -3753,7 +3890,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                             <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Planta Carga</label>
                                                     <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
@@ -3771,7 +3908,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                  </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                     <div class="form-group">
                                                         <label>Puerto Carga</label>
@@ -4282,12 +4419,12 @@ if (isset($_POST)) {
                                                         <label id="val_crt" class="validacion"> </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Fecha Real ETD</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDE" name="FECHAETDE" value="<?php echo $FECHAETD; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETD" name="FECHAETD" value="<?php echo $FECHAETD; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechaetd" class="validacion"> </label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetdreal" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             
@@ -4408,9 +4545,9 @@ if (isset($_POST)) {
                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Fecha Real ETD</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDE" name="FECHAETDE" value="<?php echo $FECHAETD; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETD" name="FECHAETD" value="<?php echo $FECHAETD; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechaetd" class="validacion"> </label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetdreal" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             
@@ -4554,9 +4691,9 @@ if (isset($_POST)) {
                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Fecha Real ETD</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDE" name="FECHAETDE" value="<?php echo $FECHAETD; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETD" name="FECHAETD" value="<?php echo $FECHAETD; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechaetd" class="validacion"> </label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetdreal" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
@@ -4599,7 +4736,7 @@ if (isset($_POST)) {
                                                 <div class="form-group">
                                                     <label>Numero courier</label>
                                                     <input type="hidden" class="form-control" placeholder="NUMERO COURIER" id="NCOURIER" name="NCOURIER" value="" />
-                                                    <input type="text" class="form-control" placeholder="numero courier" id="NCOURIER" name="NCOURIER" value="" <?php echo $DISABLED; ?> />
+                                                    <input type="text" class="form-control" placeholder="NUMERO COURIER" id="NCOURIER" name="NCOURIER" value="" <?php echo $DISABLED; ?> />
                                                     <label id="val_ncourier" class="validacion"> </label>
                                                 </div>
                                             </div>
@@ -5002,6 +5139,10 @@ if (isset($_POST)) {
                                                 <button type="submit" class="btn btn-danger btn-md" data-toggle="tooltip" title="Cerrar" name="CERRAR" value="CERRAR"  <?php echo $DISABLED2; ?> onclick="return validacionCerrar()">
                                                     <i class="ti-save-alt"></i> Cerrar
                                                 </button>
+                                                <button type="submit" name="DUPLICAR" class="btn btn-primary btn-md" data-toggle="tooltip" title="DUPLICAR" value="DUPLICAR" onclick="return validacion()">
+                                                    <i class = "ti-pencil-alt"></i> Duplicar
+                                                </button>
+
                                             <?php } ?>
                                         </div>
                                         <div class="btn-group   col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12 float-right" role="group" aria-label="Informes y Reportes">
@@ -5111,6 +5252,7 @@ if (isset($_POST)) {
                                                 <th>Peso Neto </th>
                                                 <th>Peso Bruto </th>
                                                 <th>Cantidad Envase </th>
+                                                <th>Cantidad Pallet </th>
                                                 <th>Kilo Neto </th>
                                                 <th>Kilo Bruto </th>
                                                 <th>Calibre </th>
@@ -5185,7 +5327,7 @@ if (isset($_POST)) {
                                                                             <button type="submit" class="btn btn-secondary btn-sm " id="DUPLICARDURL" name="DUPLICARDURL" data-toggle="tooltip" title="Duplicar Detalle Instructivo"   <?php echo $DISABLED2; ?>>
                                                                                 <i class="fa fa-fw fa-copy"></i><br> Duplicar
                                                                             </button>
-                                                                            <button type="submit" class="btn btn-danger btn-sm" id="ELIMINARDURL" name="ELIMINARDURL" data-toggle="tooltip" title="Eliminar Detalle Instructivo" < <?php echo $DISABLED2; ?>>
+                                                                            <button type="submit" class="btn btn-danger btn-sm" id="ELIMINARDURL" name="ELIMINARDURL" data-toggle="tooltip" title="Eliminar Detalle Instructivo" <?php echo $DISABLED2; ?>>
                                                                                 <i class="ti-close"></i><br> Eliminar
                                                                             </button>
                                                                         <?php } ?>
@@ -5197,6 +5339,7 @@ if (isset($_POST)) {
                                                         <td><?php echo number_format($NETOESTANTAR, 2, ",", ".") ?></td>
                                                         <td><?php echo number_format($BRUTOESTANTAR, 2, ",", ".") ?></td>
                                                         <td><?php echo $s['ENVASE']; ?></td>
+                                                        <td><?php echo $s['PALLET']; ?></td>
                                                         <td><?php echo $s['NETO']; ?></td>
                                                         <td><?php echo $s['BRUTO']; ?></td>
                                                         <td><?php echo $NOMBRECALIBRE; ?></td>
@@ -5263,6 +5406,7 @@ if (isset($_POST)) {
                                                 <th>Peso Neto </th>
                                                 <th>Peso Bruto </th>
                                                 <th>Cantidad Envases </th>
+                                                <th>Cantidad Pallet </th>
                                                 <th>Kilos Neto </th>
                                                 <th>Kilos Bruto </th>
                                                 <th>Fecha Embalado </th>
@@ -5322,6 +5466,7 @@ if (isset($_POST)) {
                                                         <td><?php echo number_format($NETOESTANTAR, 3, ",", ".") ?></td>
                                                         <td><?php echo number_format($BRUTOESTANTAR, 3, ",", ".") ?></td>
                                                         <td><?php echo $s['ENVASE']; ?></td>
+                                                        <td><?php echo $s['PALLET']; ?></td>
                                                         <td><?php echo $s['NETO']; ?></td>
                                                         <td><?php echo $s['BRUTO']; ?></td>
                                                         <td><?php echo $s['EMBALADO']; ?></td>
@@ -5364,7 +5509,9 @@ if (isset($_POST)) {
                 $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                 $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                 $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);                
+                $ICARGA->__SET('FECHAETDREAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);     
+                $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']);           
                 $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                 $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                 $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -5417,6 +5564,7 @@ if (isset($_POST)) {
                         $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                         $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                         $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                        $ICARGA->__SET('FECHAESTACKINGF_ICARGA', $_REQUEST['FECHAESTACKINGF']);
                         $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                         $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                         $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
@@ -5472,7 +5620,9 @@ if (isset($_POST)) {
                 $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                 $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                 $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);                
+                $ICARGA->__SET('FECHAETDREAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);         
+                $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']);       
                 $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                 $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                 $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -5525,6 +5675,7 @@ if (isset($_POST)) {
                         $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                         $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                         $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                        $ICARGA->__SET('FECHASTACKINGF_ICARGA', $_REQUEST['FECHASTACKINGF']);
                         $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                         $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                         $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
@@ -5567,6 +5718,7 @@ if (isset($_POST)) {
     
             //OPERACION EDICION DE FILA    
             if (isset($_REQUEST['GUARDAR'])) {
+                
 
                 $PUBLICAINSTRUCTIVO = $_REQUEST['NETOINSTRUCTIVO'] + $_REQUEST['REBATEINSTRUCTIVO'];
                 $ICARGA->__SET('FECHA_ICARGA', $_REQUEST['FECHAINSTRUCTIVO']);
@@ -5576,7 +5728,9 @@ if (isset($_POST)) {
                 $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                 $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                 $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);      
+                $ICARGA->__SET('FECHAETDREAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']); 
+                $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']); 
                 $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                 $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                 $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -5625,6 +5779,7 @@ if (isset($_POST)) {
                         $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                         $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                         $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                        $ICARGA->__SET('FECHASTACKINGFINAL_ICARGA', $_REQUEST['FECHASTACKINGFINAL']);
                         $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                         $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                         $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
@@ -5650,7 +5805,7 @@ if (isset($_POST)) {
                 $ICARGA_ADO->PorCargar($ICARGA);
 
                 $AUSUARIO_ADO->agregarAusuario2($NUMEROVER,1,2,"".$_SESSION["NOMBRE_USUARIO"].", Modificación de Instructivo Carga","fruta_icarga",$_REQUEST['IDP'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'],$_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );
-               
+                
                 if ($accion_dato == "crear") {
                     $id_dato = $_REQUEST['IDP'];
                     $accion_dato = "crear";
@@ -5683,6 +5838,11 @@ if (isset($_POST)) {
                         })
                     </script>';
                 }
+                echo "<pre>DUPLICAR DETECTADO\n";
+                var_dump($_REQUEST);
+                echo "</pre>";
+                exit;
+                
             }
             if (isset($_REQUEST['CERRAR'])) {
                 if ($_REQUEST['IDP']) {
@@ -5713,7 +5873,9 @@ if (isset($_POST)) {
                     $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                     $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                     $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                    $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);      
+                    $ICARGA->__SET('FECHAETDREAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                    $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);    
+                    $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']);  
                     $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                     $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                     $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -5761,6 +5923,7 @@ if (isset($_POST)) {
                             $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                             $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                             $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                            $ICARGA->__SET('FECHASTACKINGF_ICARGA', $_REQUEST['FECHASTACKINGF']);
                             $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                             $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                             $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
