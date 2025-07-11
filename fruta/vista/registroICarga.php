@@ -2776,6 +2776,25 @@ if (isset($_POST)) {
                                                     <label id="val_agcarga" class="validacion"> </label>
                                                  </div>
                                             </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Lugar Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
+                                                    <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYLCARGA as $r) : ?>
+                                                            <?php if ($ARRAYLCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_LCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_lcarga" class="validacion"> </label>
+                                                </div>
+                                            </div>
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
@@ -5161,7 +5180,7 @@ if (isset($_POST)) {
                                                         <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Report Invoice v2" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento/informeIcargaInvoicev2.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">
                                                             <i class="fa fa-file-pdf-o"></i><br> Invoice 2
                                                         </button>
-                                                        <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Report Invoice EU" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento/informeIcargaInvoiceEU.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">
+                                                        <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Report Invoice EU" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento\informeIcargaInvoiceEU.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">
                                                             <i class="fa fa-file-pdf-o"></i><br> Invoice EU
                                                         </button>
                                                         <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Informe Carga Real" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento/informeICargaReal.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">

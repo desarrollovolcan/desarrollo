@@ -155,7 +155,7 @@ class DICARGA_ADO
                                             ESTADO_REGISTRO
                                         ) 
             VALUES
-	       	(?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?,?,?,  SYSDATE(),SYSDATE(), 1, 1);";
+	       	(?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?,?,  SYSDATE(),SYSDATE(), 1, 1);";
             $this->conexion->prepare($query)
                 ->execute(
                     array(
@@ -209,6 +209,9 @@ class DICARGA_ADO
         }
         if ($DICARGA->__GET('ID_VESPECIES') == NULL) {
             $DICARGA->__SET('ID_VESPECIES', NULL);
+        }
+        if ($DICARGA->__GET('CANTIDAD_PALLET_DICARGA') == NULL) {
+            $DICARGA->__SET('CANTIDAD_PALLET_DICARGA', NULL);
         }
         try {
             $query = "
