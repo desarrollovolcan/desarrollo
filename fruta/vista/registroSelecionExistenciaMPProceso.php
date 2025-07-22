@@ -339,9 +339,9 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato)) {
                                         <button type="submit" class="btn btn-rounded btn-primary" data-toggle="tooltip" title="Por Folio" name="AGREGAR" value="AGREGAR" <?php echo $DISABLED; ?>>
                                             <i class="ti-save-alt"></i> P. Folio
                                         </button>
-                                        <button type="submit" class="btn btn-rounded btn-info" data-toggle="tooltip" title="Por Envases" name="DIVIDIR" value="DIVIDIR" <?php echo $DISABLED; ?>>
+                                        <!-- <button type="submit" class="btn btn-rounded btn-info" data-toggle="tooltip" title="Por Envases" name="DIVIDIR" value="DIVIDIR" <?php echo $DISABLED; ?>>
                                             <i class="ti-save-alt"></i> P. Envases
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </div>
                             </form>

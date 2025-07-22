@@ -24,8 +24,6 @@ include_once '../../assest/controlador/TCALIBRE_ADO.php';
 include_once '../../assest/controlador/TCALIBREIND_ADO.php';
 include_once '../../assest/controlador/TCATEGORIA_ADO.php';
 
-
-
 include_once '../../assest/controlador/EXIMATERIAPRIMA_ADO.php';
 include_once '../../assest/controlador/EXIINDUSTRIAL_ADO.php';
 include_once '../../assest/controlador/EXIEXPORTACION_ADO.php';
@@ -37,6 +35,10 @@ include_once '../../assest/modelo/EXIINDUSTRIAL.php';
 include_once '../../assest/modelo/DPEXPORTACION.php';
 include_once '../../assest/modelo/DPINDUSTRIAL.php';
 include_once '../../assest/modelo/PROCESO.php';
+
+//CONTROLADOR DE SEGREGACION
+include_once '../../assest/controlador/SEGREGACION_ADO.php';
+include_once '../../assest/modelo/SEGREGACION.php';
 
 //INCIALIZAR LAS VARIBLES
 //INICIALIZAR CONTROLADOR
@@ -67,6 +69,8 @@ $TCALIBRE_ADO =  new TCALIBRE_ADO();
 $TCALIBREIND_ADO =  new TCALIBREIND_ADO();
 $TCATEGORIA_ADO =  new TCATEGORIA_ADO();
 
+$SEGREGACION_ADO =  new SEGREGACION_ADO();
+
 //INIICIALIZAR MODELO
 
 $PROCESO =  new PROCESO();
@@ -76,6 +80,8 @@ $EXIEXPORTACION =  new EXIEXPORTACION();
 $DPINDUSTRIAL =  new DPINDUSTRIAL();
 $DPEXPORTACION =  new DPEXPORTACION();
 
+$SEGREGACION = new SEGREGACION();
+
 //INCIALIZAR VARIBALES A OCUPAR PARA LA FUNCIONALIDAD
 
 $NUMERO = "";
@@ -83,12 +89,21 @@ $NUMEROVER = "";
 $IDPROCESO = "";
 $IDQUITAR = "";
 $FOLIOEXIMATERIAPRIMAQUITAR = "";
-$FECHAPROCESO = "";
-$FECHAINGRESOPROCESO = "";
-$FECHAMODIFCIACIONPROCESO = "";
+// $FECHAPROCESO = "";
+// VARIABLES SEGREGACION
+
+
+$OBSERVACION_SEGREGACION = "";
+$OBSERVACION_INTERNO = "";
+$ESTADO_SEGREGACION = "";
+$ESTADO_REGISTRO = "";
+$IDSEGREGACION = "";
+$FECHASEGREGACION = "";
+$FECHAINGRESOSEGREGACION = "";
+$FECHAMODIFICACIONSEGREGACION = "";
 $TURNO = "";
-$TPROCESO = "";
-$OBSERVACIONPROCESO = "";
+// $TPROCESO = "";
+// $OBSERVACIONPROCESO = "";
 $PRODUCTOR = "";
 $VESPECIES = "";
 $ESTADO = "";
@@ -103,6 +118,8 @@ $TEMPORADA = "";
 $IDEMPRESA = "";
 $IDPLANTA = "";
 $IDTEMPORADA = "";
+
+
 
 $TOTALENVASEE = 0;
 $TOTALNETOE = 0;
@@ -156,9 +173,10 @@ $SINO = "";
 
 //INICIALIZAR ARREGLOS
 
-$ARRAYPROCESO = "";
-$ARRAYPROCESO2 = "";
-$ARRAYPROCESO3 = "";
+
+// $ARRAYPROCESO = "";
+// $ARRAYPROCESO2 = "";
+// $ARRAYPROCESO3 = "";
 
 $ARRAYEMPRESA = "";
 $ARRAYPLANTA = "";
@@ -203,25 +221,35 @@ $ARRAYFOLIO = "";
 $ARRAYFOLIO2 = "";
 $ARRAYFOLIO3 = "";
 
-
+$ARRAYSEGREGACION = "";
+$ARRAYSEGREGACION2 = "";
+$ARRAYENSEGREGACION3 = "";
+$ARRAYENSEGREGACION = "";
 
 //DEFINIR ARREGLOS CON LOS DATOS OBTENIDOS DE LAS FUNCIONES DE LOS CONTROLADORES
 //FOLIO EXPORTACION
+
+$ARRAYSEGREGACION1 = $SEGREGACION_ADO->listarSegregacion();
+$ARRAYSEGREGACION2 = $SEGREGACION_ADO->listarSegregacionLimite();
+
+
+
+
 $ARRAYEMPRESA = $EMPRESA_ADO->listarEmpresaCBX();
 $ARRAYPLANTA = $PLANTA_ADO->listarPlantaCBX();
 $ARRAYTEMPORADA = $TEMPORADA_ADO->listarTemporadaCBX();
 
-$ARRAYTPROCESO = $TPROCESO_ADO->listarTprocesoCBX();
+// $ARRAYTPROCESO = $TPROCESO_ADO->listarTprocesoCBX();
 $ARRAYPRODUCTOR = $PRODUCTOR_ADO->listarProductorPorEmpresaCBX($EMPRESAS);
 $ARRAYVESPECIES = $VESPECIES_ADO->listarVespeciesPorEmpresaCBX($EMPRESAS);
-$ARRAYFECHAACTUAL = $PROCESO_ADO->obtenerFecha();
-$FECHAPROCESO = $ARRAYFECHAACTUAL[0]['FECHA'];
+$ARRAYFECHAACTUAL = $SEGREGACION_ADO->obtenerFecha();
+$FECHASEGREGACION = $ARRAYFECHAACTUAL[0]['FECHA'];
 
 $ARRAYFOLIO = $FOLIO_ADO->verFolioPorEmpresaPlantaTemporadaTexportacion($EMPRESAS, $PLANTAS, $TEMPORADAS);
 $ARRAYFOLIO2 = $FOLIO_ADO->verFolioPorEmpresaPlantaTemporadaTindustrial($EMPRESAS, $PLANTAS, $TEMPORADAS);
 
 include_once "../../assest/config/validarDatosUrl.php";
-include_once "../../assest/config/datosUrlD.php";
+include_once "../../assest/config/datosUrlS.php";
 
 
 if (empty($ARRAYFOLIO)) {
@@ -255,66 +283,66 @@ if (isset($id_dato) && isset($accion_dato)) {
     $OP = $accion_dato;
 
     //OBTENECION DE INFORMACION DE LA TABLAS DE LA VISTA
-    $ARRAYTOMADA = $EXIMATERIAPRIMA_ADO->buscarPorProceso2($IDOP);
-    $ARRAYDEXPORTACIONPORPROCESO = $DPEXPORTACION_ADO->buscarPorProceso2($IDOP);
-    $ARRATDINDUSTRIALPORPROCESO = $DPINDUSTRIAL_ADO->buscarPorProceso2($IDOP);
+    // $ARRAYTOMADA = $EXIMATERIAPRIMA_ADO->buscarPorProceso2($IDOP);
+    // $ARRAYDEXPORTACIONPORPROCESO = $DPEXPORTACION_ADO->buscarPorProceso2($IDOP);
+    // $ARRATDINDUSTRIALPORPROCESO = $DPINDUSTRIAL_ADO->buscarPorProceso2($IDOP);
 
     //OBTENCIONS DE TOTALES O EL RESUMEN DE LAS TABLAS
 
-    $ARRAYEXISTENCIAMPTOTAL = $EXIMATERIAPRIMA_ADO->obtenerTotalesProceso($IDOP);
-    $ARRAYEXISTENCIAMPTOTAL2 = $EXIMATERIAPRIMA_ADO->obtenerTotalesProceso2($IDOP);
-    $TOTALNETOE = $ARRAYEXISTENCIAMPTOTAL[0]['NETO'];
-    $TOTALENVASEE = $ARRAYEXISTENCIAMPTOTAL[0]['ENVASE'];
-    $TOTALNETOEV = $ARRAYEXISTENCIAMPTOTAL2[0]['NETO'];
-    $TOTALENVASEEV = $ARRAYEXISTENCIAMPTOTAL2[0]['ENVASE'];
+    // $ARRAYEXISTENCIAMPTOTAL = $EXIMATERIAPRIMA_ADO->obtenerTotalesProceso($IDOP);
+    // $ARRAYEXISTENCIAMPTOTAL2 = $EXIMATERIAPRIMA_ADO->obtenerTotalesProceso2($IDOP);
+    // $TOTALNETOE = $ARRAYEXISTENCIAMPTOTAL[0]['NETO'];
+    // $TOTALENVASEE = $ARRAYEXISTENCIAMPTOTAL[0]['ENVASE'];
+    // $TOTALNETOEV = $ARRAYEXISTENCIAMPTOTAL2[0]['NETO'];
+    // $TOTALENVASEEV = $ARRAYEXISTENCIAMPTOTAL2[0]['ENVASE'];
 
 
-    $ARRATDINDUSTRIALTOTALPROCESO = $DPINDUSTRIAL_ADO->obtenerTotales($IDOP);
-    $ARRATDINDUSTRIALTOTALPROCESO2 = $DPINDUSTRIAL_ADO->obtenerTotales2($IDOP);
-    $ARRATDINDUSTRIALTOTALSC = $DPINDUSTRIAL_ADO->obtenerTotalesSC($IDOP);
-    $ARRATDINDUSTRIALTOTALNC = $DPINDUSTRIAL_ADO->obtenerTotalesNC($IDOP);
+    // $ARRATDINDUSTRIALTOTALPROCESO = $DPINDUSTRIAL_ADO->obtenerTotales($IDOP);
+    // $ARRATDINDUSTRIALTOTALPROCESO2 = $DPINDUSTRIAL_ADO->obtenerTotales2($IDOP);
+    // $ARRATDINDUSTRIALTOTALSC = $DPINDUSTRIAL_ADO->obtenerTotalesSC($IDOP);
+    // $ARRATDINDUSTRIALTOTALNC = $DPINDUSTRIAL_ADO->obtenerTotalesNC($IDOP);
 
-    $TOTALNETOIND = $ARRATDINDUSTRIALTOTALPROCESO[0]['NETO'];
-    $TOTALNETOINDV = $ARRATDINDUSTRIALTOTALPROCESO2[0]['NETO'];
-    $TOTALNETOINDSC = $ARRATDINDUSTRIALTOTALSC[0]['NETO'];
-    $TOTALNETOINDNC = $ARRATDINDUSTRIALTOTALNC[0]['NETO'];
+    // $TOTALNETOIND = $ARRATDINDUSTRIALTOTALPROCESO[0]['NETO'];
+    // $TOTALNETOINDV = $ARRATDINDUSTRIALTOTALPROCESO2[0]['NETO'];
+    // $TOTALNETOINDSC = $ARRATDINDUSTRIALTOTALSC[0]['NETO'];
+    // $TOTALNETOINDNC = $ARRATDINDUSTRIALTOTALNC[0]['NETO'];
 
-    $ARRAYDEXPORTACIONTOTALPROCESO = $DPEXPORTACION_ADO->obtenerTotales($IDOP);
-    $ARRAYDEXPORTACIONTOTALPROCES2 = $DPEXPORTACION_ADO->obtenerTotales2($IDOP);
-    $TOTALENVASEEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['ENVASE'];
-    $TOTALNETOEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['NETO'];
-    $TOTALBRUTOEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['BRUTO'];
-    $TOTALDESHIDRATACIONEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['DESHIDRATACION'];
+    // $ARRAYDEXPORTACIONTOTALPROCESO = $DPEXPORTACION_ADO->obtenerTotales($IDOP);
+    // $ARRAYDEXPORTACIONTOTALPROCES2 = $DPEXPORTACION_ADO->obtenerTotales2($IDOP);
+    // $TOTALENVASEEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['ENVASE'];
+    // $TOTALNETOEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['NETO'];
+    // $TOTALBRUTOEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['BRUTO'];
+    // $TOTALDESHIDRATACIONEX = $ARRAYDEXPORTACIONTOTALPROCESO[0]['DESHIDRATACION'];
 
-    $TOTALENVASEEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['ENVASE'];
-    $TOTALNETOEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['NETO'];
-    $TOTALBRUTOEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['BRUTO'];
-    $TOTALDESHIDRATACIONEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['DESHIDRATACION'];
+    // $TOTALENVASEEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['ENVASE'];
+    // $TOTALNETOEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['NETO'];
+    // $TOTALBRUTOEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['BRUTO'];
+    // $TOTALDESHIDRATACIONEXV = $ARRAYDEXPORTACIONTOTALPROCES2[0]['DESHIDRATACION'];
 
 
-    $TOTALENVASEEXPO = $TOTALENVASEEX + $TOTALENVASEIND;
-    $TOTALNETOEXPO = $TOTALNETOEX + $TOTALNETOIND;
-    $TOTALBRUTOEXPO = $TOTALBRUTOEX + $TOTALBRUTOIND;
+    // $TOTALENVASEEXPO = $TOTALENVASEEX + $TOTALENVASEIND;
+    // $TOTALNETOEXPO = $TOTALNETOEX + $TOTALNETOIND;
+    // $TOTALBRUTOEXPO = $TOTALBRUTOEX + $TOTALBRUTOIND;
 
-    if ($TOTALNETOEX != 0 && $TOTALNETOE != 0) {
-        $PEXPORTACIONEXPOEX = (($TOTALNETOEX) / $TOTALNETOE) * 100;
-        $PEXPORTACIONEXPOEXDESHI = (($TOTALDESHIDRATACIONEX) / $TOTALNETOE) * 100;
-    } else {
-        $PEXPORTACIONEXPOEX = 0;
-        $PEXPORTACIONEXPOEXDESHI = 0;
-    }
-    if ($TOTALNETOIND != 0 && $TOTALNETOE != 0) {
-        $PEXPORTACIONEXPOINDU = (($TOTALNETOIND) / $TOTALNETOE) * 100;        
-        $PEXPORTACIONEXPOINDUSC = (($TOTALNETOINDSC) / $TOTALNETOE) * 100;      
-        $PEXPORTACIONEXPOINDUNC = (($TOTALNETOINDNC) / $TOTALNETOE) * 100;      
-    } else {
-        $PEXPORTACIONEXPOINDU = 0;
-        $PEXPORTACIONEXPOINDUSC = 0;
-        $PEXPORTACIONEXPOINDUNC = 0;
-    }
+    // if ($TOTALNETOEX != 0 && $TOTALNETOE != 0) {
+    //     $PEXPORTACIONEXPOEX = (($TOTALNETOEX) / $TOTALNETOE) * 100;
+    //     $PEXPORTACIONEXPOEXDESHI = (($TOTALDESHIDRATACIONEX) / $TOTALNETOE) * 100;
+    // } else {
+    //     $PEXPORTACIONEXPOEX = 0;
+    //     $PEXPORTACIONEXPOEXDESHI = 0;
+    // }
+    // if ($TOTALNETOIND != 0 && $TOTALNETOE != 0) {
+    //     $PEXPORTACIONEXPOINDU = (($TOTALNETOIND) / $TOTALNETOE) * 100;        
+    //     $PEXPORTACIONEXPOINDUSC = (($TOTALNETOINDSC) / $TOTALNETOE) * 100;      
+    //     $PEXPORTACIONEXPOINDUNC = (($TOTALNETOINDNC) / $TOTALNETOE) * 100;      
+    // } else {
+    //     $PEXPORTACIONEXPOINDU = 0;
+    //     $PEXPORTACIONEXPOINDUSC = 0;
+    //     $PEXPORTACIONEXPOINDUNC = 0;
+    // }
 
-    $PEXPORTACIONEXPO = ($PEXPORTACIONEXPOEXDESHI + $PEXPORTACIONEXPOINDU);
-    $DIFERENCIAKILOSNETOEXPO = $TOTALNETOE - ($TOTALDESHIDRATACIONEX + $TOTALNETOIND);
+    // $PEXPORTACIONEXPO = ($PEXPORTACIONEXPOEXDESHI + $PEXPORTACIONEXPOINDU);
+    // $DIFERENCIAKILOSNETOEXPO = $TOTALNETOE - ($TOTALDESHIDRATACIONEX + $TOTALNETOIND);
 
     //IDENTIFICACIONES DE OPERACIONES
     //crear =  OBTENCION DE DATOS INICIALES PARA PODER CREAR LA RECEPCION
@@ -330,25 +358,25 @@ if (isset($id_dato) && isset($accion_dato)) {
         $DISABLED3 = "disabled";
         $DISABLEDMENU = "disabled";
         $DISABLEDSTYLE3 = "style='background-color: #eeeeee;'";
-        $ARRAYPROCESO = $PROCESO_ADO->verProceso($IDOP);
+        $ARRAYSEGREGACION = $SEGREGACION_ADO->verSegregacion($IDOP);
         //OBTENCIONS DE LOS DATODS DE LA COLUMNAS DE LA FILA OBTENIDA
         //PASAR DATOS OBTENIDOS A VARIABLES QUE SE VISUALIZAR EN EL FORMULARIO DE LA VISTA
-        foreach ($ARRAYPROCESO as $r) :
+        foreach ($ARRAYSEGREGACION as $r) :
 
-            $IDPROCESO = $IDOP;
-            $NUMEROVER = "" . $r['NUMERO_PROCESO'];
-            $FECHAPROCESO = "" . $r['FECHA_PROCESO'];
-            $FECHAINGRESOPROCESO = "" . $r['INGRESO'];
-            $FECHAMODIFCIACIONPROCESO = "" . $r['MODIFICACION'];
-            $TURNO = "" . $r['TURNO'];
-            $TPROCESO = "" . $r['ID_TPROCESO'];
-            $OBSERVACIONPROCESO = "" . $r['OBSERVACIONE_PROCESO'];
+            $IDSEGREGACION = $IDOP;
+            $NUMEROVER = "" . $r['NUMERO_SEGREGACION'];
+            $FECHASEGREGACION = "" . $r['FECHA_SEGREGACION'];
+            $FECHAINGRESOSEGREGACION = "" . $r['INGRESO'];
+            $FECHAMODIFICACIONSEGREGACION = "" . $r['MODIFICACION'];
+            $OBSERVACION_SEGREGACION = "" . $r['OBSERVACIONE_SEGREGACION'];
+            $OBSERVACION_INTERNO = "" . $r['OBSERVACIONE_INTERNO'];
             $EMPRESA = "" . $r['ID_EMPRESA'];
             $PLANTA = "" . $r['ID_PLANTA'];
             $TEMPORADA = "" . $r['ID_TEMPORADA'];
             $PRODUCTOR = "" . $r['ID_PRODUCTOR'];
             $VESPECIES = "" . $r['ID_VESPECIES'];
             $ESTADO = "" . $r['ESTADO'];
+            $ESTADO_SEGREGACION = "" . $r['ESTADO_SEGREGACION'];
 
         endforeach;
     }
@@ -365,24 +393,24 @@ if (isset($id_dato) && isset($accion_dato)) {
         $DISABLED3 = "disabled";
         $DISABLEDMENU = "disabled";
         $DISABLEDSTYLE = "style='background-color: #eeeeee;'";
-        $ARRAYPROCESO = $PROCESO_ADO->verProceso($IDOP);
+        $ARRAYSEGREGACION = $SEGREGACION_ADO->verSegregacion($IDOP);
         //OBTENCIONS DE LOS DATODS DE LA COLUMNAS DE LA FILA OBTENIDA
         //PASAR DATOS OBTENIDOS A VARIABLES QUE SE VISUALIZAR EN EL FORMULARIO DE LA VISTA
-        foreach ($ARRAYPROCESO as $r) :
-            $IDPROCESO = $IDOP;
-            $NUMEROVER = "" . $r['NUMERO_PROCESO'];
-            $FECHAPROCESO = "" . $r['FECHA_PROCESO'];
-            $FECHAINGRESOPROCESO = "" . $r['INGRESO'];
-            $FECHAMODIFCIACIONPROCESO = "" . $r['MODIFICACION'];
-            $TURNO = "" . $r['TURNO'];
-            $TPROCESO = "" . $r['ID_TPROCESO'];
-            $OBSERVACIONPROCESO = "" . $r['OBSERVACIONE_PROCESO'];
+        foreach ($ARRAYSEGREGACION as $r) :
+            $IDSEGREGACION = $IDOP;
+            $NUMEROVER = "" . $r['NUMERO_SEGREGACION'];
+            $FECHASEGREGACION = "" . $r['FECHA_SEGREGACION'];
+            $FECHAINGRESOSEGREGACION = "" . $r['INGRESO'];
+            $FECHAMODIFICACIONSEGREGACION = "" . $r['MODIFICACION'];
+            $OBSERVACION_SEGREGACION = "" . $r['OBSERVACIONE_SEGREGACION'];
+            $OBSERVACION_INTERNO = "" . $r['OBSERVACIONE_INTERNO'];
             $EMPRESA = "" . $r['ID_EMPRESA'];
             $PLANTA = "" . $r['ID_PLANTA'];
             $TEMPORADA = "" . $r['ID_TEMPORADA'];
             $PRODUCTOR = "" . $r['ID_PRODUCTOR'];
             $VESPECIES = "" . $r['ID_VESPECIES'];
             $ESTADO = "" . $r['ESTADO'];
+            $ESTADO_SEGREGACION = "" . $r['ESTADO_SEGREGACION'];
 
         endforeach;
     }
@@ -401,41 +429,38 @@ if (isset($id_dato) && isset($accion_dato)) {
         //ALMACENAR INFORMACION EN ARREGLO
         //LLAMADA A LA FUNCION DE CONTROLADOR  
         //SE LE PASE UNO DE LOS DATOS OBTENIDO PREVIAMENTE A TRAVEZ DE LA URL
-        $ARRAYPROCESO = $PROCESO_ADO->verProceso($IDOP);
+        $ARRAYSEGREGACION = $SEGREGACION_ADO->verSegregacion($IDOP);
         //OBTENCIONS DE LOS DATODS DE LA COLUMNAS DE LA FILA OBTENIDA
         //PASAR DATOS OBTENIDOS A VARIABLES QUE SE VISUALIZAR EN EL FORMULARIO DE LA VISTA
 
-        foreach ($ARRAYPROCESO as $r) :
-            $IDPROCESO = $IDOP;
-            $NUMEROVER = "" . $r['NUMERO_PROCESO'];
-            $FECHAPROCESO = "" . $r['FECHA_PROCESO'];
-            $FECHAINGRESOPROCESO = "" . $r['INGRESO'];
-            $FECHAMODIFCIACIONPROCESO = "" . $r['MODIFICACION'];
-            $TURNO = "" . $r['TURNO'];
-            $TPROCESO = "" . $r['ID_TPROCESO'];
-            $OBSERVACIONPROCESO = "" . $r['OBSERVACIONE_PROCESO'];
+        foreach ($ARRAYSEGREGACION as $r) :
+            $IDSEGREGACION = $IDOP;
+            $NUMEROVER = "" . $r['NUMERO_SEGREGACION'];
+            $FECHASEGREGACION = "" . $r['FECHA_SEGREGACION'];
+            $FECHAINGRESOSEGREGACION = "" . $r['INGRESO'];
+            $FECHAMODIFICACIONSEGREGACION = "" . $r['MODIFICACION'];
+            $OBSERVACION_INTERNO = "" . $r['OBSERVACIONE_INTERNOE'];
+            $OBSERVACION_SEGREGACION = "" . $r['OBSERVACIONE_SEGREGACIONE'];
             $EMPRESA = "" . $r['ID_EMPRESA'];
             $PLANTA = "" . $r['ID_PLANTA'];
             $TEMPORADA = "" . $r['ID_TEMPORADA'];
             $PRODUCTOR = "" . $r['ID_PRODUCTOR'];
             $VESPECIES = "" . $r['ID_VESPECIES'];
             $ESTADO = "" . $r['ESTADO'];
+            $ESTADO_SEGREGACION = "" . $r['ESTADO_SEGREGACION'];
         endforeach;
     }
 }
 //PROCESO PARA OBTENER LOS DATOS DEL FORMULARIO  Y MANTENERLO AL ACTUALIZACION QUE REALIZA EL SELECT DE PRODUCTOR
 if (isset($_POST)) {
-    if (isset($_REQUEST['FECHAPROCESO'])) {
-        $FECHAPROCESO = $_REQUEST['FECHAPROCESO'];
+    if (isset($_REQUEST['FECHASEGREGACION'])) {
+        $FECHASEGREGACION = $_REQUEST['FECHASEGREGACION'];
     }
-    if (isset($_REQUEST['TURNO'])) {
-        $TURNO = $_REQUEST['TURNO'];
+    if (isset($_REQUEST['OBSERVACION_INTERNO'])) {
+        $OBSERVACION_INTERNO = $_REQUEST['OBSERVACION_INTERNO'];
     }
-    if (isset($_REQUEST['TPROCESO'])) {
-        $TPROCESO = $_REQUEST['TPROCESO'];
-    }
-    if (isset($_REQUEST['OBSERVACIONPROCESO'])) {
-        $OBSERVACIONPROCESO = $_REQUEST['OBSERVACIONPROCESO'];
+    if (isset($_REQUEST['OBSERVACION_SEGREGACION'])) {
+        $OBSERVACION_SEGREGACION = $_REQUEST['OBSERVACION_SEGREGACION'];
     }
     if (isset($_REQUEST['PRODUCTOR'])) {
         $PRODUCTOR = $_REQUEST['PRODUCTOR'];
@@ -452,6 +477,7 @@ if (isset($_POST)) {
     if (isset($_REQUEST['TEMPORADA'])) {
         $TEMPORADA = "" . $_REQUEST['TEMPORADA'];
     }
+
 }
 ?>
 
@@ -459,7 +485,7 @@ if (isset($_POST)) {
 <html lang="es">
 
 <head>
-    <title>Registro Proceso</title>
+    <title>Registro Segregacion</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="">
@@ -470,49 +496,29 @@ if (isset($_POST)) {
             <script type="text/javascript">
                 //VALIDACION DE FORMULARIO
                 function validacion() {
-
-
-
-                    FECHAPROCESO = document.getElementById("FECHAPROCESO").value;
-                    TURNO = document.getElementById("TURNO").selectedIndex;
-                    TPROCESO = document.getElementById("TPROCESO").selectedIndex;
+                    
+                    FECHASEGREGACION = document.getElementById("FECHASEGREGACION").value;
                     PRODUCTOR = document.getElementById("PRODUCTOR").selectedIndex;
                     VESPECIES = document.getElementById("VESPECIES").selectedIndex;
-                    OBSERVACIONPROCESO = document.getElementById("OBSERVACIONPROCESO").value;
+                    OBSERVACIONSEGREGACION = document.getElementById("OBSERVACIONSEGREGACION").value;
+                    OBSERVACIONINTERNO = document.getElementById("OBSERVACIONINTERNO").value;
+                    
 
-                    document.getElementById('val_fechap').innerHTML = "";
-                    document.getElementById('val_turno').innerHTML = "";
-
-                    document.getElementById('val_tproceso').innerHTML = "";
+                    document.getElementById('val_fechas').innerHTML = "";
                     document.getElementById('val_productor').innerHTML = "";
                     document.getElementById('val_variedad').innerHTML = "";
-                    document.getElementById('val_observacion').innerHTML = "";
+                    document.getElementById('val_observacionseg').innerHTML = "";
+                    document.getElementById('val_observacioninter').innerHTML = "";
+                    
 
-                    if (FECHAPROCESO == null || FECHAPROCESO.length == 0 || /^\s+$/.test(FECHAPROCESO)) {
-                        document.form_reg_dato.FECHAPROCESO.focus();
-                        document.form_reg_dato.FECHAPROCESO.style.borderColor = "#FF0000";
-                        document.getElementById('val_fechap').innerHTML = "NO A INGRESADO DATO";
+                   
+                    if (FECHASEGREGACION == null || FECHASEGREGACION.length == 0 || /^\s+$/.test(FECHASEGREGACION)) {
+                        document.form_reg_dato.FECHASEGREGACION.focus();
+                        document.form_reg_dato.FECHASEGREGACION.style.borderColor = "#FF0000";
+                        document.getElementById('val_fechas').innerHTML = "NO A INGRESADO DATO";
                         return false;
                     }
-                    document.form_reg_dato.FECHAPROCESO.style.borderColor = "#4AF575";
-
-
-                    if (TURNO == null || TURNO == 0) {
-                        document.form_reg_dato.TURNO.focus();
-                        document.form_reg_dato.TURNO.style.borderColor = "#FF0000";
-                        document.getElementById('val_turno').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
-                        return false;
-                    }
-                    document.form_reg_dato.TURNO.style.borderColor = "#4AF575";
-
-                    if (TPROCESO == null || TPROCESO == 0) {
-                        document.form_reg_dato.TPROCESO.focus();
-                        document.form_reg_dato.TPROCESO.style.borderColor = "#FF0000";
-                        document.getElementById('val_tproceso').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
-                        return false;
-                    }
-                    document.form_reg_dato.TPROCESO.style.borderColor = "#4AF575";
-
+                    document.form_reg_dato.FECHASEGREGACION.style.borderColor = "#4AF575";
                     if (PRODUCTOR == null || PRODUCTOR == 0) {
                         document.form_reg_dato.PRODUCTOR.focus();
                         document.form_reg_dato.PRODUCTOR.style.borderColor = "#FF0000";
@@ -574,15 +580,15 @@ if (isset($_POST)) {
                     <div class="content-header">
                         <div class="d-flex align-items-center">
                             <div class="mr-auto">
-                                <h3 class="page-title">Packing</h3>
+                                <h3 class="page-title">Segregacion</h3>
                                 <div class="d-inline-block align-items-center">
                                     <nav>
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"> <a href="index.php"> <i class="mdi mdi-home-outline"></i></a></li>
                                             <li class="breadcrumb-item" aria-current="page">Modulo</li>
-                                            <li class="breadcrumb-item" aria-current="page">Calidad de la fruta</li>
-                                            <li class="breadcrumb-item" aria-current="page">Registro de segregacion</li>
-                                            <li class="breadcrumb-item active" aria-current="page"> <a href="#p">Segregacion </a>  </li>
+                                            <li class="breadcrumb-item" aria-current="page">Segregacion</li>
+                                            <li class="breadcrumb-item" aria-current="page">Registro de Segregacion</li>
+                                            <li class="breadcrumb-item active" aria-current="page"> <a href="#p">Registro Segregacion</a>  </li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -610,84 +616,40 @@ if (isset($_POST)) {
                                                 <input type="hidden" class="form-control" placeholder="ID TEMPORADA" id="TEMPORADAE" name="TEMPORADAE" value="<?php echo $TEMPORADA; ?>" />
 
 
-
-                                                <input type="hidden" class="form-control" placeholder="TOTAL NETO" id="TOTALNETO" name="TOTALNETO" value="<?php echo $TOTALNETOE; ?>" />
-                                                <input type="hidden" class="form-control" id="TOTALNETOEX" name="TOTALNETOEX" value="<?php echo $TOTALNETOEX; ?>" />
-                                                <input type="hidden" class="form-control" id="TOTALDESHIDRATACIONEX" name="TOTALDESHIDRATACIONEX" value="<?php echo $TOTALDESHIDRATACIONEX; ?>" />
-                                                <input type="hidden" class="form-control" id="TOTALNETOIND" name="TOTALNETOIND" value="<?php echo $TOTALNETOIND; ?>" />
-                                                <input type="hidden" class="form-control" id="TOTALNETOINDSC" name="TOTALNETOINDSC" value="<?php echo $TOTALNETOINDSC; ?>" />
-                                                <input type="hidden" class="form-control" id="TOTALNETOINDNC" name="TOTALNETOINDNC" value="<?php echo $TOTALNETOINDNC; ?>" />   
-                                                <input type="hidden" class="form-control" placeholder="TOTAL NETO" id="PEXPORTACIONEXPOEX" name="PEXPORTACIONEXPOEX" value="<?php echo $PEXPORTACIONEXPOEX; ?>" />
-                                                <input type="hidden" class="form-control" placeholder="TOTAL NETO" id="PEXPORTACIONEXPOEXDESHI" name="PEXPORTACIONEXPOEXDESHI" value="<?php echo $PEXPORTACIONEXPOEXDESHI; ?>" />
-                                                <input type="hidden" class="form-control" placeholder="TOTAL NETO" id="PEXPORTACIONEXPOINDU" name="PEXPORTACIONEXPOINDU" value="<?php echo $PEXPORTACIONEXPOINDU; ?>" />                                                
-                                                <input type="hidden" class="form-control" id="PEXPORTACIONEXPOINDUSC" name="PEXPORTACIONEXPOINDUSC" value="<?php echo $PEXPORTACIONEXPOINDUSC; ?>" />
-                                                <input type="hidden" class="form-control" id="PEXPORTACIONEXPOINDUNC" name="PEXPORTACIONEXPOINDUNC" value="<?php echo $PEXPORTACIONEXPOINDUNC; ?>" />
-                                                <input type="hidden" class="form-control" id="PEXPORTACIONEXPO" name="PEXPORTACIONEXPO" value="<?php echo $PEXPORTACIONEXPO; ?>" />
-                                                <input type="hidden" class="form-control" placeholder="DIFERENCIA KILOS NETO" id="DIFERENCIAKILOSNETOEX" name="DIFERENCIAKILOSNETOEX" value="<?php echo $DIFERENCIAKILOSNETOEXPO; ?>" />
-
-                                                <input type="hidden" class="form-control" placeholder="ID PROCESO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
-                                                <input type="hidden" class="form-control" placeholder="OP PROCESO" id="OPP" name="OPP" value="<?php echo $OP; ?>" />
-                                                <input type="hidden" class="form-control" placeholder="URL PROCESO" id="URLP" name="URLP" value="registroProceso" />
-                                                <label>Numero</label>
-                                                <input type="number" class="form-control" style="background-color: #eeeeee;" placeholder="Numero Proceso" id="NUMEROVER" name="NUMEROVER" value="<?php echo $NUMEROVER; ?>" disabled />
+                                   
+                                                <input type="hidden" class="form-control" placeholder="ID SEGREGACION" id="IDS" name="IDS" value="<?php echo $IDOP; ?>" />
+                                                <input type="hidden" class="form-control" placeholder="OP SEGREGACION" id="OPS" name="OPS" value="<?php echo $OP; ?>" />
+                                                <input type="hidden" class="form-control" placeholder="URL SEGREGACION" id="URLS" name="URLS" value="registroSegregacion" />
+                                                <label>Numero Segregacion</label>
+                                                <input type="number" class="form-control" style="background-color: #eeeeee;" placeholder="Numero Segregacion" id="NUMEROVER" name="NUMEROSVER" value="<?php echo $NUMEROVER; ?>" disabled />
                                                 <label id="val_id" class="validacion"> </label>
                                             </div>
-                                        </div>
-                                        <div class="col-xxl-6 col-xl-1 col-lg-1 col-md-6 col-sm-6 col-6 col-xs-6">
                                         </div>
                                         <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 col-xs-6">
                                             <div class="form-group">
                                                 <label>Fecha Ingreso</label>
-                                                <input type="hidden" class="form-control" placeholder="Fecha Ingreso " id="FECHAINGRESOPROCESOE" name="FECHAINGRESOPROCESOE" value="<?php echo $FECHAINGRESOPROCESO; ?>" />
-                                                <input type="date" class="form-control" style="background-color: #eeeeee;" placeholder="FECHA RECEPCION" id="FECHAINGRESOPROCESO" name="FECHAINGRESOPROCESO" value="<?php echo $FECHAINGRESOPROCESO; ?>" disabled />
+                                                <input type="hidden" class="form-control" placeholder="Fecha Ingreso " id="FECHAINGRESOSEGREGACIONE" name="FECHAINGRESOSEGREGACIONE" value="<?php echo $FECHAINGRESOSEGREGACION; ?>" />
+                                                <input type="date" class="form-control" style="background-color: #eeeeee;" placeholder="FECHA SEGREGACION" id="FECHAINGRESOSEGREGACION" name="FECHAINGRESOSEGREGACION" value="<?php echo $FECHAINGRESOSEGREGACION; ?>" disabled />
                                                 <label id="val_fechai" class="validacion"> </label>
                                             </div>
                                         </div>
                                         <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 col-xs-6">
                                             <div class="form-group">
                                                 <label>Fecha Modificacion</label>
-                                                <input type="hidden" class="form-control" placeholder="Fecha Modificacion " id="FECHAMODIFCIACIONPROCESOE" name="FECHAMODIFCIACIONPROCESOE" value="<?php echo $FECHAMODIFCIACIONPROCESO; ?>" />
-                                                <input type="date" class="form-control " style="background-color: #eeeeee;" placeholder="FECHA MODIFICACION" id="FECHAMODIFCIACIONPROCESO" name="FECHAMODIFCIACIONPROCESO" value="<?php echo $FECHAMODIFCIACIONPROCESO; ?>" disabled />
+                                                <input type="hidden" class="form-control" placeholder="Fecha Modificacion " id="FECHAMODIFICACIONSEGREGACIONE" name="FECHAMODIFICACIONSEGREGACIONE" value="<?php echo $FECHAMODIFICACIONSEGREGACION; ?>" />
+                                                <input type="date" class="form-control " style="background-color: #eeeeee;" placeholder="FECHA MODIFICACION" id="FECHAMODIFICACIONSEGREGACION" name="FECHAMODIFICACIONSEGREGACION" value="<?php echo $FECHAMODIFICACIONSEGREGACION; ?>" disabled />
                                                 <label id="val_fecham" class="validacion"> </label>
                                             </div>
                                         </div>
+                                        
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                    <div class="row">                                        
+                                        <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 col-xs-6">
                                             <div class="form-group">
-                                                <label>Fecha </label>
-                                                <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAPROCESOE" name="FECHAPROCESOE" value="<?php echo $FECHAPROCESO; ?>" />
-                                                <input type="date" class="form-control"  placeholder="Fecha Proceso" id="FECHAPROCESO" name="FECHAPROCESO" value="<?php echo $FECHAPROCESO; ?>" <?php echo $DISABLED; ?>  <?php echo $DISABLEDFOLIO; ?> />
-                                                <label id="val_fechap" class="validacion"> </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label>Turno</label>
-                                                <input type="hidden" class="form-control" placeholder="TURNO" id="TURNOE" name="TURNOE" value="<?php echo $TURNO; ?>" />
-                                                <select class="form-control select2" id="TURNO" name="TURNO" style="width: 100%;" <?php echo $DISABLED; ?> <?php echo $DISABLED3; ?> <?php echo $DISABLEDFOLIO; ?>>
-                                                    <option></option>
-                                                    <option value="1" <?php if ($TURNO == "1") { echo "selected"; } ?>>Dia </option>
-                                                    <option value="2" <?php if ($TURNO == "2") { echo "selected"; } ?>> Noche</option>
-                                                </select>
-                                                <label id="val_turno" class="validacion"> </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label>Tipo Proceso</label>
-                                                <input type="hidden" class="form-control" placeholder="TIPO PROCESO" id="TPROCESOE" name="TPROCESOE" value="<?php echo $TPROCESO; ?>" />
-                                                <select class="form-control select2" id="TPROCESO" name="TPROCESO" style="width: 100%;" <?php echo $DISABLED3; ?>  <?php echo $DISABLEDFOLIO; ?>>
-                                                    <option></option>
-                                                    <?php foreach ($ARRAYTPROCESO as $r) : ?>
-                                                        <?php if ($ARRAYTPROCESO) {    ?>
-                                                            <option value="<?php echo $r['ID_TPROCESO']; ?>" <?php if ($TPROCESO == $r['ID_TPROCESO']) {  echo "selected";  } ?>> <?php echo $r['NOMBRE_TPROCESO'] ?> </option>
-                                                        <?php } else { ?>
-                                                            <option>No Hay Datos Registrados </option>
-                                                        <?php } ?>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <label id="val_tproceso" class="validacion"> </label>
+                                                <label>Fecha Segregacion</label>
+                                                <input type="hidden" class="form-control" placeholder="FECHA SEGREGACION" id="FECHASEGREGACIONE" name="FECHASEGREGACIONE" value="<?php echo $FECHASEGREGACION; ?>" />
+                                                <input type="date" class="form-control " placeholder="FECHA SEGREGACION" id="FECHASEGREGACION" name="FECHASEGREGACION" value="<?php echo $FECHASEGREGACION; ?>" <?php echo $DISABLED; ?> <?php echo $DISABLEDFOLIO; ?> />
+                                                <label id="val_fechas" class="validacion"> </label>
                                             </div>
                                         </div>
                                         <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
@@ -733,10 +695,20 @@ if (isset($_POST)) {
                                     <div class="row">
                                         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
                                             <div class="form-group">
-                                                <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONPROCESOE" name="OBSERVACIONPROCESOE" value="<?php echo $OBSERVACIONPROCESO; ?>" />
-                                                <label>Observaciones </label>
-                                                <textarea class="form-control" rows="1"  placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONPROCESO" name="OBSERVACIONPROCESO" <?php echo $DISABLED; ?>  <?php echo $DISABLEDFOLIO; ?>><?php echo $OBSERVACIONPROCESO; ?></textarea>
-                                                <label id="val_observacion" class="validacion"> </label>
+                                                <input type="hidden" class="form-control" placeholder="OBSERVACION SEGREGACION" id="OBSERVACIONSEGREGACIONE" name="OBSERVACIONSEGREGACIONE" value="<?php echo $OBSERVACIONSEGREGACION; ?>" />
+                                                <label>observacion de Segregacion </label>
+                                                <textarea class="form-control" rows="1"  placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONSEGREGACION" name="OBSERVACIONSEGREGACION" <?php echo $DISABLED; ?>  <?php echo $DISABLEDFOLIO; ?>><?php echo $OBSERVACIONSEGREGACION; ?></textarea>
+                                                <label id="val_observacionseg" class="validacion"> </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" placeholder="OBSERVACION INTERNO" id="OBSERVACIONINTERNOE" name="OBSERVACIONINTERNOE" value="<?php echo $OBSERVACIONINTERNO; ?>" />
+                                                <label>Observacion Interna</label>
+                                                <textarea class="form-control" rows="1"  placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONINTERNO" name="OBSERVACIONINTERNO" <?php echo $DISABLED; ?>  <?php echo $DISABLEDFOLIO; ?>><?php echo $OBSERVACIONINTERNO; ?></textarea>
+                                                <label id="val_observacioninter" class="validacion"> </label>
                                             </div>
                                         </div>
                                     </div>
@@ -787,10 +759,10 @@ if (isset($_POST)) {
                                 <div class="card-header">
                                     <form method="post" id="form2" name="form2">
                                         <div class="form-row align-items-center">
-                                            <input type="hidden" class="form-control" placeholder="ID PROCESO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
-                                            <input type="hidden" class="form-control" placeholder="OP PROCESO" id="OPP" name="OPP" value="<?php echo $OP; ?>" />
-                                            <input type="hidden" class="form-control" placeholder="URL PROCESO" id="URLP" name="URLP" value="registroProceso" />
-                                            <input type="hidden" class="form-control" placeholder="URL SELECCION" id="URLD" name="URLD" value="registroSelecionExistenciaMPProceso" />
+                                            <input type="hidden" class="form-control" placeholder="ID SEGREGACION" id="IDS" name="IDS" value="<?php echo $IDOP; ?>" />
+                                            <input type="hidden" class="form-control" placeholder="OP SEGREGACION" id="OPP" name="OPS" value="<?php echo $OP; ?>" />
+                                            <input type="hidden" class="form-control" placeholder="URL SEGREGACION" id="URLP" name="URLS" value="registroSegregacion" />
+                                            <input type="hidden" class="form-control" placeholder="URL SELECCION" id="URLD" name="URLD" value="registroSelecionExistenciaMPSegregacion" />
                                             <div class="col-auto">
                                                 <button type="submit" class="btn btn-success btn-block mb-2" data-toggle="tooltip" title="Seleccion Existencia" id="SELECIONOCDURL" name="SELECIONOCDURL" 
                                                     <?php echo $DISABLED2; ?> <?php echo $DISABLEDFOLIO; ?> <?php if ($ESTADO == 0) {   echo "disabled style='background-color: #eeeeee;'";    } ?>>
@@ -967,309 +939,7 @@ if (isset($_POST)) {
                                     </div>
                                 </div>
                             </div>                        
-                            <div class="card">
-                                <div class="card-header bg-success">
-                                    <h4 class="card-title">Salida / Detalle Proceso </h4>
-                                </div>
-                                <div class="card-header">
-                                    <div class="form-row align-items-center">
-                                        <div class="btn-group">
-                                            <form method="post" id="form5" name="form5">
-                                                <div class="form-group">
-                                                    <input type="hidden" class="form-control" placeholder="ID PROCESO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
-                                                    <input type="hidden" class="form-control" placeholder="OP PROCESO" id="OPP" name="OPP" value="<?php echo $OP; ?>" />
-                                                    <input type="hidden" class="form-control" placeholder="URL PROCESO" id="URLP" name="URLP" value="registroProceso" />
-                                                    <input type="hidden" class="form-control" placeholder="URL SELECCION" id="URLD" name="URLD" value="registroDprocesoExportacion" />
-                                                    <button type="submit" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Producto Terminado" id="CREARDURL" name="CREARDURL"
-                                                         <?php echo $DISABLED2; ?> <?php echo $DISABLEDFOLIO; ?> <?php if ($ESTADO == 0) { echo "disabled style='background-color: #eeeeee;'";} ?>>
-                                                         Agregar prod. Terminado
-                                                    </button>
-                                                </div>
-                                            </form>
-                                            <form method="post" id="form6" name="form6">
-                                                <div class="form-group">
-                                                    <input type="hidden" class="form-control" placeholder="ID PROCESO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
-                                                    <input type="hidden" class="form-control" placeholder="OP PROCESO" id="OPP" name="OPP" value="<?php echo $OP; ?>" />
-                                                    <input type="hidden" class="form-control" placeholder="URL PROCESO" id="URLP" name="URLP" value="registroProceso" />
-                                                    <input type="hidden" class="form-control" placeholder="URL SELECCION" id="URLD" name="URLD" value="registroDprocesoIndustrial" />
-                                                    <button type="submit" class="btn btn-secondary btn-block" data-toggle="tooltip" title="Agregar Producto Industrial" id="CREARDURL" name="CREARDURL" 
-                                                        <?php echo $DISABLED2; ?> <?php echo $DISABLEDFOLIO; ?> <?php   if ($ESTADO == 0) { echo "disabled style='background-color: #eeeeee;'"; }  ?>>
-                                                        Agregar prod. Industrial
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table id="salida" class="table-hover " style="width: 100%;">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th>Estado</th>
-                                                    <th>P. Terminado/Industrial</th>
-                                                    <th>Folio</th>
-                                                    <th class="text-center">Operaciones</th>
-                                                    <th>Fecha Embalado </th>
-                                                    <th>Codigo Estandar</th>
-                                                    <th>Envase/Estandar</th>
-                                                    <th>Variedad</th>
-                                                    <th>Cantidad Envase</th>
-                                                    <th>Kilo Neto </th>
-                                                    <th>% Deshidratación </th>
-                                                    <th>Kilo Con Desh. </th>
-                                                    <th>Kilo Bruto </th>
-                                                    <th>Embolsado </th>
-                                                    <th>Tipo Manejo </th>
-                                                    <th>Tipo Calibre </th>
-                                                    <th>Tipo Categoria </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php if ($ARRAYDEXPORTACIONPORPROCESO) { ?>
-                                                    <?php foreach ($ARRAYDEXPORTACIONPORPROCESO as $r) : ?>
-
-                                                        <?php
-                                                        $ARRAYVESPECIES = $VESPECIES_ADO->verVespecies($r['ID_VESPECIES']);
-                                                        if ($ARRAYVESPECIES) {
-                                                            $NOMBREVARIEDAD = $ARRAYVESPECIES[0]['NOMBRE_VESPECIES'];
-                                                        } else {
-                                                            $NOMBREVARIEDAD = "Sin Datos";
-                                                        }
-                                                        $ARRAYTCALIBRE = $TCALIBRE_ADO->verCalibre($r['ID_TCALIBRE']);
-                                                        if ($ARRAYTCALIBRE) {
-                                                            $NOMBRETCALIBRE = $ARRAYTCALIBRE[0]['NOMBRE_TCALIBRE'];
-                                                        } else {
-                                                            $NOMBRETCALIBRE = "Sin Datos";
-                                                        }
-                                                        $ARRAYTMANEJO = $TMANEJO_ADO->verTmanejo($r['ID_TMANEJO']);
-                                                        if ($ARRAYTMANEJO) {
-                                                            $NOMBRETMANEJO = $ARRAYTMANEJO[0]['NOMBRE_TMANEJO'];
-                                                        } else {
-                                                            $NOMBRETMANEJO = "Sin Datos";
-                                                        }
-                                                        $ARRAYESTANDAR = $EEXPORTACION_ADO->verEstandar($r['ID_ESTANDAR']);
-                                                        if ($ARRAYESTANDAR) {
-                                                            $CODIGOESTANDAR = $ARRAYESTANDAR[0]['CODIGO_ESTANDAR'];
-                                                            $NOMBREESTANDAR = $ARRAYESTANDAR[0]['NOMBRE_ESTANDAR'];
-                                                        } else {
-                                                            $CODIGOESTANDAR = "Sin Datos";
-                                                            $NOMBREESTANDAR = "Sin Datos";
-                                                        }
-                                                        if ($r['EMBOLSADO'] == "0") {
-                                                            $EMBOLSADO = "NO";
-                                                        } else if ($r['EMBOLSADO'] == "1") {
-                                                            $EMBOLSADO =  "SI";
-                                                        } else {
-                                                            $EMBOLSADO = "Sin Datos";
-                                                        }
-                                                        $ARRAYTCATEGORIA=$TCATEGORIA_ADO->verTcategoria($r['ID_TCATEGORIA']);
-                                                        if($ARRAYTCATEGORIA){
-                                                           $NOMBRETCATEGORIA= $ARRAYTCATEGORIA[0]["NOMBRE_TCATEGORIA"];
-                                                        }else{
-                                                            $NOMBRETCATEGORIA = "Sin Datos";
-                                                        } 
-                                                        ?>
-                                                        <tr class="text-center">
-                                                            
-                                                            <?php 
-                                                                switch($r['ESTADO_FOLIO']){
-                                                                    case 1: echo '<td style="background: #18d26b; color: white;">P. Completado</td>';
-                                                                        break;
-                                                                    case 2: echo '<td style="background: #ffa800; color: white;">P. Incompleto</td>';
-                                                                        break;
-                                                                    case 3: echo '<td style="background: #3085f5; color: white;">P. Muestra</td>';
-                                                                        break;
-                                                                    default: echo '<td style="background: #93b4d4; color: white;">No identificado</td>';
-                                                                }
-                                                            ?>
-                                                            <td>P. Terminado</td>
-                                                            <td><?php echo $r['FOLIO_DPEXPORTACION']; ?></td>
-                                                            <td class="text-center">
-                                                                <form method="post" id="form3" id="form3">
-                                                                    <input type="hidden" class="form-control" placeholder="ID DPEXPORTACION" id="IDD" name="IDD" value="<?php echo $r['ID_DPEXPORTACION']; ?>" />
-                                                                    <input type="hidden" class="form-control" placeholder="ID PROCESO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
-                                                                    <input type="hidden" class="form-control" placeholder="OP PROCESO" id="OPP" name="OPP" value="<?php echo $OP; ?>" />
-                                                                    <input type="hidden" class="form-control" placeholder="URL PROCESO" id="URLP" name="URLP" value="registroProceso" />
-                                                                    <input type="hidden" class="form-control" placeholder="URL DPEXPORTACION" id="URLD" name="URLD" value="registroDprocesoExportacion" />
-                                                                    <div class="btn-group btn-block" role="group" aria-label="Operaciones Detalle">
-                                                                        <?php if ($ESTADO == "0") { ?>
-                                                                            <button type="submit" class="btn  btn-info  btn-sm" id="VERDURL" name="VERDURL" data-toggle="tooltip" title="Ver Detalle ">
-                                                                                <i class="ti-eye"></i><br> Ver
-                                                                            </button>
-                                                                        <?php } ?>
-                                                                        <?php if ($ESTADO == "1") { ?>
-                                                                            <button type="submit" class="btn btn-warning btn-sm" id="EDITARDURL" name="EDITARDURL" data-toggle="tooltip" title="Editar Detalle " <?php echo $DISABLED2; ?>>
-                                                                                <i class="ti-pencil-alt"></i><br> Editar
-                                                                            </button>
-                                                                            <button type="submit" class="btn btn-secondary btn-sm" id="DUPLICARDURL" name="DUPLICARDURL" data-toggle="tooltip" title="Duplicar Detalle " <?php echo $DISABLED2; ?>>
-                                                                                <i class="fa fa-fw fa-copy"></i><br> Duplicar
-                                                                            </button>
-                                                                            <button type="submit" class="btn btn-danger btn-sm" id="ELIMINARDURL" name="ELIMINARDURL" data-toggle="tooltip" title="Eliminar Detalle " <?php echo $DISABLED2; ?>>
-                                                                                <i class="ti-close"></i><br> Eliminar
-                                                                            </button>
-                                                                        <?php } ?>
-                                                                    </div>
-                                                                </form>
-                                                            </td>
-                                                            <td><?php echo $r['EMBALADO']; ?></td>
-                                                            <td><?php echo $CODIGOESTANDAR; ?></td>
-                                                            <td><?php echo $NOMBREESTANDAR; ?></td>
-                                                            <td><?php echo $NOMBREVARIEDAD; ?></td>
-                                                            <td><?php echo $r['ENVASE']; ?></td>
-                                                            <td><?php echo $r['NETO']; ?></td>
-                                                            <td><?php echo $r['PORCENTAJE']; ?></td>
-                                                            <td><?php echo $r['DESHIDRATACION']; ?></td>
-                                                            <td><?php echo $r['BRUTO']; ?></td>
-                                                            <td><?php echo $EMBOLSADO; ?></td>
-                                                            <td><?php echo $NOMBRETMANEJO; ?></td>
-                                                            <td><?php echo $NOMBRETCALIBRE; ?></td>
-                                                            <td><?php echo $NOMBRETCATEGORIA; ?></td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
-                                                <?php } ?>
-                                                <?php if ($ARRATDINDUSTRIALPORPROCESO) { ?>
-                                                    <?php foreach ($ARRATDINDUSTRIALPORPROCESO as $r) : ?>
-
-                                                        <?php
-                                                        $ARRAYVEREINDUTRIAL = $EINDUSTRIAL_ADO->verEstandar($r['ID_ESTANDAR']);
-                                                        if ($ARRAYVEREINDUTRIAL) {
-                                                            $CODIGOESTANDARI = $ARRAYVEREINDUTRIAL[0]['CODIGO_ESTANDAR'];
-                                                            $NOMBREESTANDARI = $ARRAYVEREINDUTRIAL[0]['NOMBRE_ESTANDAR'];
-                                                        } else {
-                                                            $CODIGOESTANDARI = "Sin Datos";
-                                                            $NOMBREESTANDARI = "Sin Datos";
-                                                        }
-
-                                                        $ARRAYTCALIBREIND = $TCALIBREIND_ADO->verCalibreInd($r['ID_TCALIBREIND']);
-                                                        if ($ARRAYTCALIBREIND) {
-                                                            $NOMBRETCALIBREIND = $ARRAYTCALIBREIND[0]['NOMBRE_TCALIBREIND'];
-                                                        } else {
-                                                            $NOMBRETCALIBREIND = "Sin Datos";
-                                                        }
-                                                        ?>
-                                                        <tr class="text-center">
-                                                            <td>-</td>
-                                                            <td>P. Industrial</td>
-                                                            <td><?php echo $r['FOLIO_DPINDUSTRIAL']; ?></td>
-                                                            <td class="text-center">
-                                                                <form method="post" id="form4" id="form4">
-                                                                    <input type="hidden" class="form-control" placeholder="ID DPINDUSTRIAL" id="IDD" name="IDD" value="<?php echo $r['ID_DPINDUSTRIAL']; ?>" />
-                                                                    <input type="hidden" class="form-control" placeholder="ID PROCESO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
-                                                                    <input type="hidden" class="form-control" placeholder="OP PROCESO" id="OPP" name="OPP" value="<?php echo $OP; ?>" />
-                                                                    <input type="hidden" class="form-control" placeholder="URL PROCESO" id="URLP" name="URLP" value="registroProceso" />
-                                                                    <input type="hidden" class="form-control" placeholder="URL DPINDUSTRIAL" id="URLD" name="URLD" value="registroDprocesoIndustrial" />
-                                                                    <div class="btn-group  btn-block" role="group" aria-label="Operaciones Detalle">
-                                                                        <?php if ($ESTADO == "0") { ?>
-                                                                            <button type="submit" class="btn btn-sm btn-info   " id="VERDURL" name="VERDURL" data-toggle="tooltip" tsitle="Ver Detalle ">
-                                                                                <i class="ti-eye"></i><br> Ver
-                                                                            </button>
-                                                                        <?php } ?>
-                                                                        <?php if ($ESTADO == "1") { ?>
-                                                                            <button type="submit" class="btn  btn-sm   btn-warning  " id="EDITARDURL" name="EDITARDURL" data-toggle="stooltip" title="Editar Detalle " <?php echo $DISABLED2; ?>>
-                                                                                <i class="ti-pencil-alt"></i><br> Editar
-                                                                            </button>
-                                                                            <button type="submit" class="btn btn-sm  btn-secondary  " id="DUPLICARDURL" name="DUPLICARDURL" data-togsgle="tooltip" title="Duplicar Detalle " <?php echo $DISABLED2; ?>>
-                                                                                <i class="fa fa-fw fa-copy"></i><br> Duplicar
-                                                                            </button>
-                                                                            <button type="submit" class="btn btn-sm   btn-danger  " id="ELIMINARDURL" name="ELIMINARDURL" data-togglse="tooltip" title="Eliminar Detalle " <?php echo $DISABLED2; ?>>
-                                                                                <i class="ti-close"></i><br> Eliminar
-                                                                            </button>
-                                                                        <?php } ?>
-                                                                    </div>
-                                                                </form>
-                                                            </td>
-                                                            <td><?php echo $r['FECHA_EMBALADO_DPINDUSTRIAL']; ?></td>
-                                                            <td> <?php echo $CODIGOESTANDARI; ?> </td>
-                                                            <td> <?php echo $NOMBREESTANDARI; ?> </td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td><?php echo $r['KILOS_NETO_DPINDUSTRIAL']; ?></td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td> <?php echo $NOMBRETCALIBREIND; ?> </td>
-                                                            <td>-</td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Datos generales">
-                                        <div class="form-row align-items-center" role="group" aria-label="Datos">
-                                            <div class="col-auto">
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">Kilos Neto MP</div>
-                                                    </div>
-                                                    <!-- inicio input -->
-                                                    <input type="hidden" class="form-control" placeholder="TOTAL NETO" id="TOTALNETO" name="TOTALNETO" value="<?php echo $TOTALNETOE; ?>" />
-                                                    <input type="text" class="form-control text-center" placeholder="Total Neto " id="TOTALNETOEV" name="TOTALNETOEV" value="<?php echo $TOTALNETOEV; ?>" disabled />
-                                                    <!-- /termino input -->
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            Kilos Neto Exportacion
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" class="form-control" id="TOTALNETOEX" name="TOTALNETOEX" value="<?php echo $TOTALNETOEX; ?>" />
-                                                    <input type="text" class="form-control text-center" placeholder="TOTAL TOTALNETOEX" id="TOTALNETOEXV" name="TOTALNETOEXV" value="<?php echo $TOTALNETOEXV; ?>" disabled />
-                                                </div>
-                                            </div>                                        
-                                            <div class="col-auto">
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            Kilos Con Desh.
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" class="form-control" id="TOTALDESHIDRATACIONEX" name="TOTALDESHIDRATACIONEX" value="<?php echo $TOTALDESHIDRATACIONEX; ?>" />
-                                                    <input type="text" class="form-control text-center" placeholder="TOTAL DESHIDRATACION" id="TOTALDESHIDRATACIONEXV" name="TOTALDESHIDRATACIONEXV" value="<?php echo $TOTALDESHIDRATACIONEX; ?>" disabled />
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            Kilos Neto Industrial
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" class="form-control" id="TOTALNETOIND" name="TOTALNETOIND" value="<?php echo $TOTALNETOIND; ?>" />
-                                                    <input type="text" class="form-control text-center" placeholder="TOTAL NETO" id="TOTALNETOINDV" name="TOTALNETOINDV" value="<?php echo $TOTALNETOINDV; ?>" disabled />
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            Diferencia Kilos
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" class="form-control" placeholder="DIFERENCIA KILOS NETO" id="DIFERENCIAKILOSNETOEX" name="DIFERENCIAKILOSNETOEX" value="<?php echo $DIFERENCIAKILOSNETOEXPO; ?>" />
-                                                    <input type="text" class="form-control text-center" placeholder="DIFERENCIA KILOS NETO" id="DIFERENCIAKILOSNETOEXN" name="DIFERENCIAKILOSNETOEXN" value="<?php echo number_format($DIFERENCIAKILOSNETOEXPO, 2, ",", "."); ?>" disabled />
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label id="val_dproceso" class="validacion "><?php echo $MENSAJEEXPORTACION; ?> </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label id="val_dproceso" class="validacion "><?php echo $MENSAJEINDUSTRIAL; ?> </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label id="val_dproceso" class="validacion center"><?php echo $MENSAJEDIFERENCIA; ?> </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        
                         <?php endif ?>
                         <!--.row -->
                     </section>
@@ -1286,47 +956,46 @@ if (isset($_POST)) {
         //OPERACION DE REGISTRO DE FILA
         if (isset($_REQUEST['CREAR'])) {
 
-            $ARRAYNUMERO = $PROCESO_ADO->obtenerNumero($_REQUEST['EMPRESA'], $_REQUEST['PLANTA'], $_REQUEST['TEMPORADA']);
+            $ARRAYNUMERO = $SEGREGACION_ADO->obtenerNumero($_REQUEST['EMPRESA'], $_REQUEST['PLANTA'], $_REQUEST['TEMPORADA']);
             $NUMERO = $ARRAYNUMERO[0]['NUMERO'] + 1;
 
             //UTILIZACION METODOS SET DEL MODELO
             //SETEO DE ATRIBUTOS DE LA CLASE, OBTENIDO EN EL FORMULARIO
-            $PROCESO->__SET('NUMERO_PROCESO', $NUMERO);
-            $PROCESO->__SET('FECHA_PROCESO', $_REQUEST['FECHAPROCESO']);
-            $PROCESO->__SET('TURNO', $_REQUEST['TURNO']);
-            $PROCESO->__SET('OBSERVACIONE_PROCESO', $_REQUEST['OBSERVACIONPROCESO']);
-            $PROCESO->__SET('ID_VESPECIES', $_REQUEST['VESPECIES']);
-            $PROCESO->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);
-            $PROCESO->__SET('ID_TPROCESO', $_REQUEST['TPROCESO']);
-            $PROCESO->__SET('ID_EMPRESA', $_REQUEST['EMPRESA']);
-            $PROCESO->__SET('ID_PLANTA', $_REQUEST['PLANTA']);
-            $PROCESO->__SET('ID_TEMPORADA', $_REQUEST['TEMPORADA']);
-            $PROCESO->__SET('ID_USUARIOI', $IDUSUARIOS);
-            $PROCESO->__SET('ID_USUARIOM', $IDUSUARIOS);
+            $SEGREGACION->__SET('NUMERO_SEGREGACION', $NUMERO);
+            $SEGREGACION->__SET('FECHA_SEGREGACION', $_REQUEST['FECHASEGREGACION']);
+            $SEGREGACION->__SET('OBSERVACIONE_SEGREGACION', $_REQUEST['OBSERVACIONSEGREGACION']);
+            $SEGREGACION->__SET('OBSERVACIONE_INTERNO', $_REQUEST['OBSERVACIONINTERNO']);
+            $SEGREGACION->__SET('ID_VESPECIES', $_REQUEST['VESPECIES']);
+            $SEGREGACION->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);
+            $SEGREGACION->__SET('ID_EMPRESA', $_REQUEST['EMPRESA']);
+            $SEGREGACION->__SET('ID_PLANTA', $_REQUEST['PLANTA']);
+            $SEGREGACION->__SET('ID_TEMPORADA', $_REQUEST['TEMPORADA']);
+            $SEGREGACION->__SET('ID_USUARIOI', $IDUSUARIOS);
+            $SEGREGACION->__SET('ID_USUARIOM', $IDUSUARIOS);
             //LLAMADA AL METODO DE REGISTRO DEL CONTROLADOR  HORAINGRESOPROCESO
-            $PROCESO_ADO->agregarProceso($PROCESO);
+            $SEGREGACION_ADO->registrarSegregacion($SEGREGACION);
             //OBTENER EL ID DE LA RECEPCION CREADA PARA LUEGO ENVIAR EL INGRESO DEL DETALLE
-            $ARRYAOBTENERID = $PROCESO_ADO->obtenerId(
-                $_REQUEST['FECHAPROCESO'],
+            $ARRYAOBTENERID = $SEGREGACION_ADO->obtenerId(
+                $_REQUEST['FECHASEGREGACION'],
                 $_REQUEST['EMPRESA'],
                 $_REQUEST['PLANTA'],
                 $_REQUEST['TEMPORADA']
             );
             //REDIRECCIONAR A PAGINA registroRecepcion.php
-            $AUSUARIO_ADO->agregarAusuario2($NUMERO,1,1,"".$_SESSION["NOMBRE_USUARIO"].", Registro de Proceso.","fruta_proceso", $ARRYAOBTENERID[0]['ID_PROCESO'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'], $_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );  
+            $AUSUARIO_ADO->agregarAusuario2($NUMERO,1,1,"".$_SESSION["NOMBRE_USUARIO"].", Registro de Segregacion.","fruta_segregacion", $ARRYAOBTENERID[0]['ID_SEGREGACION'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'], $_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );  
 
-            $id_dato = $ARRYAOBTENERID[0]['ID_PROCESO'];
+            $id_dato = $ARRYAOBTENERID[0]['ID_SEGREGACION'];
             $accion_dato = "crear";
             echo '<script>
                 Swal.fire({
                     icon:"success",
                     title:"Registro Creado",
-                    text:"El registro de proceso se ha creado correctamente",
+                    text:"El registro de segregacion se ha creado correctamente",
                     showConfirmButton: true,
                     confirmButtonText:"Cerrar",
                     closeOnConfirm:false
                 }).then((result)=>{
-                        location.href = "registroProceso.php?op&id='.$id_dato.'&a='.$accion_dato.'";
+                        location.href = "registroSegregacion.php?op&id='.$id_dato.'&a='.$accion_dato.'";
                     
                 })
             </script>';
@@ -1334,63 +1003,63 @@ if (isset($_POST)) {
         //OPERACION EDICION DE FILA
         if (isset($_REQUEST['GUARDAR'])) {
 
-            $PROCESO->__SET('FECHA_PROCESO',  $_REQUEST['FECHAPROCESO']);
-            $PROCESO->__SET('TURNO',  $_REQUEST['TURNOE']);
-            $PROCESO->__SET('OBSERVACIONE_PROCESO', $_REQUEST['OBSERVACIONPROCESO']);
+            $SEGREGACION->__SET('FECHA_SEGREGACION',  $_REQUEST['FECHASEGREGACION']);
+            $SEGREGACION->__SET('OBSERVACIONE_INTERNO', $_REQUEST['OBSERVACIONINTERNO']);
+            $SEGREGACION->__SET('OBSERVACIONE_SEGREGACION', $_REQUEST['OBSERVACIONSEGREGACION']);
 
-            $PROCESO->__SET('KILOS_NETO_ENTRADA', $_REQUEST['TOTALNETO']);
-            $PROCESO->__SET('KILOS_NETO_PROCESO', $_REQUEST['TOTALNETOEX']);
-            $PROCESO->__SET('KILOS_INDUSTRIAL_PROCESO', $_REQUEST['TOTALNETOIND']);
-            $PROCESO->__SET('KILOS_INDUSTRIALSC_PROCESO', $_REQUEST['TOTALNETOINDSC']);
-            $PROCESO->__SET('KILOS_INDUSTRIALNC_PROCESO', $_REQUEST['TOTALNETOINDNC']);
-            $PROCESO->__SET('KILOS_EXPORTACION_PROCESO', $_REQUEST['TOTALDESHIDRATACIONEX']);      
+            // $PROCESO->__SET('KILOS_NETO_ENTRADA', $_REQUEST['TOTALNETO']);
+            // $PROCESO->__SET('KILOS_NETO_PROCESO', $_REQUEST['TOTALNETOEX']);
+            // $PROCESO->__SET('KILOS_INDUSTRIAL_PROCESO', $_REQUEST['TOTALNETOIND']);
+            // $PROCESO->__SET('KILOS_INDUSTRIALSC_PROCESO', $_REQUEST['TOTALNETOINDSC']);
+            // $PROCESO->__SET('KILOS_INDUSTRIALNC_PROCESO', $_REQUEST['TOTALNETOINDNC']);
+            // $PROCESO->__SET('KILOS_EXPORTACION_PROCESO', $_REQUEST['TOTALDESHIDRATACIONEX']);      
 
-            $PROCESO->__SET('PDEXPORTACION_PROCESO', $_REQUEST['PEXPORTACIONEXPOEX']);
-            $PROCESO->__SET('PDEXPORTACIONCD_PROCESO', $_REQUEST['PEXPORTACIONEXPOEXDESHI']);
-            $PROCESO->__SET('PDINDUSTRIAL_PROCESO', $_REQUEST['PEXPORTACIONEXPOINDU']);
-            $PROCESO->__SET('PDINDUSTRIALSC_PROCESO', $_REQUEST['PEXPORTACIONEXPOINDUSC']);
-            $PROCESO->__SET('PDINDUSTRIALNC_PROCESO', $_REQUEST['PEXPORTACIONEXPOINDUNC']);
-            $PROCESO->__SET('PORCENTAJE_PROCESO', $_REQUEST['PEXPORTACIONEXPO']);
+            // $PROCESO->__SET('PDEXPORTACION_PROCESO', $_REQUEST['PEXPORTACIONEXPOEX']);
+            // $PROCESO->__SET('PDEXPORTACIONCD_PROCESO', $_REQUEST['PEXPORTACIONEXPOEXDESHI']);
+            // $PROCESO->__SET('PDINDUSTRIAL_PROCESO', $_REQUEST['PEXPORTACIONEXPOINDU']);
+            // $PROCESO->__SET('PDINDUSTRIALSC_PROCESO', $_REQUEST['PEXPORTACIONEXPOINDUSC']);
+            // $PROCESO->__SET('PDINDUSTRIALNC_PROCESO', $_REQUEST['PEXPORTACIONEXPOINDUNC']);
+            // $PROCESO->__SET('PORCENTAJE_PROCESO', $_REQUEST['PEXPORTACIONEXPO']);
 
-            $PROCESO->__SET('ID_VESPECIES',  $_REQUEST['VESPECIESE']);
-            $PROCESO->__SET('ID_PRODUCTOR',  $_REQUEST['PRODUCTORE']);
-            $PROCESO->__SET('ID_TPROCESO', $_REQUEST['TPROCESOE']);
-            $PROCESO->__SET('ID_USUARIOM', $IDUSUARIOS);
-            $PROCESO->__SET('ID_PROCESO', $_REQUEST['IDP']);
+            $SEGREGACION->__SET('ID_VESPECIES',  $_REQUEST['VESPECIESE']);
+            $SEGREGACION->__SET('ID_PRODUCTOR',  $_REQUEST['PRODUCTORE']);
+            // $SEGREGACION->__SET('ID_TPROCESO', $_REQUEST['TPROCESOE']);
+            $SEGREGACION->__SET('ID_USUARIOM', $IDUSUARIOS);
+            $SEGREGACION->__SET('ID_SEGREGACION', $_REQUEST['IDS']);
             //LLAMADA AL METODO DE EDITAR DEL CONTROLADOR
-            $PROCESO_ADO->actualizarProceso($PROCESO);
+            $SEGREGACION_ADO->actualizarSegregacion($SEGREGACION);
 
-            $AUSUARIO_ADO->agregarAusuario2($NUMEROVER,1,2,"".$_SESSION["NOMBRE_USUARIO"].", Modificación de Proceso.","fruta_proceso", $_REQUEST['IDP'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'], $_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );  
+            $AUSUARIO_ADO->agregarAusuario2($NUMEROVER,1,2,"".$_SESSION["NOMBRE_USUARIO"].", Modificación de Segregacion.","fruta_segregacion", $_REQUEST['IDS'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'], $_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );  
             
             if ($accion_dato == "crear") {
-                $id_dato = $_REQUEST['IDP'];
+                $id_dato = $_REQUEST['IDS'];
                 $accion_dato = "crear";
                 echo '<script>
                     Swal.fire({
                         icon:"info",
                         title:"Registro Modificado",
-                        text:"El registro de Proceso se ha modificada correctamente",
+                        text:"El registro de Segregacion se ha modificada correctamente",
                         showConfirmButton: true,
                         confirmButtonText:"Cerrar",
                         closeOnConfirm:false
                     }).then((result)=>{
-                        location.href = "registroProceso.php?op&id='.$id_dato.'&a='.$accion_dato.'";                        
+                        location.href = "registroSegregacion.php?op&id='.$id_dato.'&a='.$accion_dato.'";                        
                     })
                 </script>';
             }
             if ($accion_dato == "editar") {
-                $id_dato = $_REQUEST['IDP'];
+                $id_dato = $_REQUEST['IDS'];
                 $accion_dato = "editar";
                 echo '<script>
                     Swal.fire({
                         icon:"info",
                         title:"Registro Modificado",
-                        text:"El registro de Proceso se ha modificada correctamente",
+                        text:"El registro de Segregacion se ha modificada correctamente",
                         showConfirmButton: true,
                         confirmButtonText:"Cerrar",
                         closeOnConfirm:false
                     }).then((result)=>{
-                        location.href = "registroProceso.php?op&id='.$id_dato.'&a='.$accion_dato.'";                        
+                        location.href = "registroSegregacion.php?op&id='.$id_dato.'&a='.$accion_dato.'";                        
                     })
                 </script>';
             }
@@ -1511,7 +1180,7 @@ if (isset($_POST)) {
                             Swal.fire({
                                 icon:"info",
                                 title:"Registro Cerrado",
-                                text:"Este proceso se encuentra cerrada y no puede ser modificada.",
+                                text:"Esta segregacion se encuentra cerrada y no puede ser modificada.",
                                 showConfirmButton: true,
                                 confirmButtonText:"Cerrar",
                                 closeOnConfirm:false
@@ -1527,12 +1196,12 @@ if (isset($_POST)) {
                             Swal.fire({
                                 icon:"info",
                                 title:"Registro Cerrado",
-                                text:"Este proceso se encuentra cerrada y no puede ser modificada.",
+                                text:"Esta segregacion se encuentra cerrada y no puede ser modificada.",
                                 showConfirmButton: true,
                                 confirmButtonText:"Cerrar",
                                 closeOnConfirm:false
                             }).then((result)=>{
-                                location.href = "registroProceso.php?op&id='.$id_dato.'&a='.$accion_dato.'";                            
+                                location.href = "registroSegregacion.php?op&id='.$id_dato.'&a='.$accion_dato.'";                            
                             })
                         </script>';
                     } 

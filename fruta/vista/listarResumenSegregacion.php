@@ -99,7 +99,7 @@ if ($EMPRESAS  && $PLANTAS && $TEMPORADAS) {
 <html lang="es">
 
 <head>
-    <title>Agrupado PT Registros de Calidad</title>
+    <title>Agrupado registros segregacion</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="">
@@ -139,15 +139,15 @@ if ($EMPRESAS  && $PLANTAS && $TEMPORADAS) {
                     <div class="content-header">
                         <div class="d-flex align-items-center">
                             <div class="mr-auto">
-                                <h3 class="page-title">Agrupado PT Registros de Calidad</h3>
+                                <h3 class="page-title">Agrupado PT Registros segregacion</h3>
                                 <div class="d-inline-block align-items-center">
                                     <nav>
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="index.php"><i class="mdi mdi-home-outline"></i></a></li>
                                             <li class="breadcrumb-item" aria-current="page">Módulo</li>
-                                            <li class="breadcrumb-item" aria-current="page">Registro de Calidad</li>
+                                            <li class="breadcrumb-item" aria-current="page">Segregacion</li>
                                             <li class="breadcrumb-item" aria-current="page">Agrupado</li>
-                                            <li class="breadcrumb-item active" aria-current="page"> <a href="#">Agrupado PT Registros de Calidad</a>
+                                            <li class="breadcrumb-item active" aria-current="page"> <a href="#">Agrupado PT Registros de segregacion</a>
                                             </li>
                                         </ol>
                                     </nav>
