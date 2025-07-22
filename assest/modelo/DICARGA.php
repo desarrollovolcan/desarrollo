@@ -9,6 +9,7 @@
         //ATRIBUTOS DE LA CLASE    
         private	  $ID_DICARGA; 
         private	  $CANTIDAD_ENVASE_DICARGA;
+        private	  $CANTIDAD_PALLET_DICARGA;
         private	  $KILOS_NETO_DICARGA;
         private	  $KILOS_BRUTO_DICARGA;
         private	  $PRECIO_US_DICARGA;
